@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5951.robot.subsystems;
 
 import org.usfirst.frc.team5951.robot.RobotMap;
-import org.usfirst.frc.team5951.robot.commands.IntakeAndShooter.StopIntake;
+import org.usfirst.frc.team5951.robot.commands.intakeAndShooter.StopIntake;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;

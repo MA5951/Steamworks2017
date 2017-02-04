@@ -20,177 +20,181 @@ import util.ChassisMath;
 public class ChassisArcade extends Subsystem {
 
 	// Talons
-		private CANTalon chassisLeftFront;
-		private CANTalon chassisLeftRear;
-		private CANTalon chassisRightFront;
-		private CANTalon chassisRightRear;
+	private CANTalon chassisLeftFront;
+	private CANTalon chassisLeftRear;
+	private CANTalon chassisRightFront;
+	private CANTalon chassisRightRear;
 
-		// Solenoids (Shifters)
-		private DoubleSolenoid shiftersPiston;
+	// Solenoids (Shifters)
+	private DoubleSolenoid shiftersPiston;
 
-		// Encoders
-		private Encoder chassisEncoderLeft;
-		private Encoder chassisEncoderRight;
+	// Encoders
+	private Encoder chassisEncoderLeft;
+	private Encoder chassisEncoderRight;
 
-		// Gyro
-		private ADXRS450_Gyro gyro;
+	// Gyro
+	private ADXRS450_Gyro gyro;
 
-		// PID values
-		private final double kP_DISTANCE = 0.3;
-		private final double kP_ANGLE = 0.005;
+	// PID values
+	private final double kP_DISTANCE = 0.3;
+	private final double kP_ANGLE = 0.005;
 
-		/**
-		 * Constructor for the ChassisArcade class, initializes components.
-		 */
-		public ChassisArcade() {
-			// Talons init
-			chassisLeftFront = new CANTalon(RobotMap.k_CHASSIS_LEFT_FRONT_TALON);
-			chassisLeftRear = new CANTalon(RobotMap.k_CHASSIS_LEFT_REAR_TALON);
-			chassisRightFront = new CANTalon(RobotMap.k_CHASSIS_RIGHT_FRONT_TALON);
-			chassisRightRear = new CANTalon(RobotMap.k_CHASSIS_RIGHT_REAR_TALON);
+	/**
+	 * Constructor for the ChassisArcade class, initializes components.
+	 */
+	public ChassisArcade() {
+		// Talons init
+		chassisLeftFront = new CANTalon(RobotMap.k_CHASSIS_LEFT_FRONT_TALON);
+		chassisLeftRear = new CANTalon(RobotMap.k_CHASSIS_LEFT_REAR_TALON);
+		chassisRightFront = new CANTalon(RobotMap.k_CHASSIS_RIGHT_FRONT_TALON);
+		chassisRightRear = new CANTalon(RobotMap.k_CHASSIS_RIGHT_REAR_TALON);
 
-			chassisLeftFront.changeControlMode(TalonControlMode.PercentVbus);
-			chassisLeftRear.changeControlMode(TalonControlMode.Follower);
-			chassisRightFront.changeControlMode(TalonControlMode.PercentVbus);
-			chassisRightRear.changeControlMode(TalonControlMode.Follower);
+		chassisLeftFront.changeControlMode(TalonControlMode.PercentVbus);
+		chassisLeftRear.changeControlMode(TalonControlMode.Follower);
+		chassisRightFront.changeControlMode(TalonControlMode.PercentVbus);
+		chassisRightRear.changeControlMode(TalonControlMode.Follower);
 
-			// Pneumatics Init
-			shiftersPiston = new DoubleSolenoid(RobotMap.k_PCM, RobotMap.k_CHASSIS_SHIFTERS_OPEN, RobotMap.k_CHASSIS_SHIFTERS_CLOSE);
-			shiftersPiston.set(Value.kReverse);
+		// Pneumatics Init
+		shiftersPiston = new DoubleSolenoid(RobotMap.k_PCM, RobotMap.k_CHASSIS_SHIFTERS_OPEN,
+				RobotMap.k_CHASSIS_SHIFTERS_CLOSE);
+		shiftersPiston.set(Value.kReverse);
 
-			// Gyro init
-			gyro = new ADXRS450_Gyro(Port.kOnboardCS0);
+		// Gyro init
+		gyro = new ADXRS450_Gyro(Port.kOnboardCS0);
 
-			// Encoders init
-			chassisEncoderLeft = new Encoder(RobotMap.k_CHASSIS_ENCODER_LEFT_A, RobotMap.k_CHASSIS_ENCODER_LEFT_B);
-			chassisEncoderRight = new Encoder(RobotMap.k_CHASSIS_ENCODER_RIGHT_A, RobotMap.k_CHASSIS_ENCODER_RIGHT_B);
-		}
+		// Encoders init
+		chassisEncoderLeft = new Encoder(RobotMap.k_CHASSIS_ENCODER_LEFT_A, RobotMap.k_CHASSIS_ENCODER_LEFT_B);
+		chassisEncoderRight = new Encoder(RobotMap.k_CHASSIS_ENCODER_RIGHT_A, RobotMap.k_CHASSIS_ENCODER_RIGHT_B);
+	}
 
-		/**
-		 * Drives the robot with values from the joystick using the
-		 * {@link ChassisMath}'s math function.
-		 * 
-		 * @param moveValue
-		 *            - Joystick's Y value
-		 * @param rotateValue
-		 *            - Joystick's X value
-		 */
-		public void arcadeDrive(Joystick stick) {
-			double[] chassisValues = ChassisMath.calculatePower(stick.getY(), stick.getX());
+	/**
+	 * Drives the robot with values from the joystick using the
+	 * {@link ChassisMath}'s math function.
+	 * 
+	 * @param moveValue
+	 *            - Joystick's Y value
+	 * @param rotateValue
+	 *            - Joystick's X value
+	 */
+	public void arcadeDrive(Joystick stick) {
+		double[] chassisValues = ChassisMath.calculatePower(stick.getY(), stick.getX());
 
-			setLeftPower(chassisValues[0]);
-			setRightPower(chassisValues[1]);
-		}
-		
-		public void arcadeDrive(double moveValue, double rotateValue) {
-			double[] chassisValues = ChassisMath.calculatePower(moveValue, rotateValue);
+		setLeftPower(chassisValues[0]);
+		setRightPower(chassisValues[1]);
+	}
 
-			setLeftPower(chassisValues[0]);
-			setRightPower(chassisValues[1]);
-		}
+	public void arcadeDrive(double moveValue, double rotateValue) {
+		double[] chassisValues = ChassisMath.calculatePower(moveValue, rotateValue);
 
-		/**
-		 * Sets the power to the left side of the chassis
-		 * 
-		 * @param power
-		 *            - Power to give
-		 */
-		public void setLeftPower(double power) {
-			this.chassisLeftFront.set(power);
-			this.chassisLeftRear.set(this.chassisLeftFront.getDeviceID());
-		}
+		setLeftPower(chassisValues[0]);
+		setRightPower(chassisValues[1]);
+	}
 
-		/**
-		 * Sets the power to the right side of the chassis
-		 * 
-		 * @param power
-		 *            - Power to give
-		 */
-		public void setRightPower(double power) {
-			this.chassisRightFront.set(power);
-			this.chassisRightRear.set(this.chassisRightFront.getDeviceID());
-		}
+	/**
+	 * Sets the power to the left side of the chassis
+	 * 
+	 * @param power
+	 *            - Power to give
+	 */
+	public void setLeftPower(double power) {
+		this.chassisLeftFront.set(power);
+		this.chassisLeftRear.set(this.chassisLeftFront.getDeviceID());
+	}
 
-		/**
-		 * Stops the chassis. Disables all motors.
-		 */
-		public void stopChassis() {
-			this.setRightPower(0);
-			this.setLeftPower(0);
-		}
+	/**
+	 * Sets the power to the right side of the chassis
+	 * 
+	 * @param power
+	 *            - Power to give
+	 */
+	public void setRightPower(double power) {
+		this.chassisRightFront.set(power);
+		this.chassisRightRear.set(this.chassisRightFront.getDeviceID());
+	}
 
-		/**
-		 * Turns the chassis to the wanted angle with an offset of 2.
-		 * 
-		 * @param angle
-		 *            - Angle to turn to.
-		 */
-		public void turnToAngle(double angle) {
-			this.gyro.reset();
+	/**
+	 * Stops the chassis. Disables all motors.
+	 */
+	public void stopChassis() {
+		this.setRightPower(0);
+		this.setLeftPower(0);
+	}
 
-			if (angle < 0) {
-				angle = 360 - angle;
-				while (this.gyro.getAngle() > angle + 2 && this.gyro.getAngle() < angle - 2) {
-					this.setRightPower(0.3);
-				}
-			} else {
-				while (this.gyro.getAngle() > angle + 2 && this.gyro.getAngle() < angle - 2) {
-					this.setLeftPower(0.3);
-				}
+	/**
+	 * Turns the chassis to the wanted angle with an offset of 2.
+	 * 
+	 * @param angle
+	 *            - Angle to turn to.
+	 */
+	public void turnToAngle(double angle) {
+		this.gyro.reset();
+
+		if (angle < 0) {
+			angle = 360 - angle;
+			while (this.gyro.getAngle() > angle + 2 && this.gyro.getAngle() < angle - 2) {
+				this.setRightPower(0.3);
 			}
-			
-			this.stopChassis();
-		}
-
-		/**
-		 * TWEEK Find real PID values
-		 * Drives straight a certain distance, for now this is only 
-		 * @param distance
-		 */
-		@SuppressWarnings("Untested")
-		public void driveStraight(double distance) {
-			gyro.reset();
-			chassisEncoderLeft.reset();
-			chassisEncoderRight.reset();
-
-			double distanceError = distance;
-			double gyroError = 0;
-
-			while (((chassisEncoderLeft.getDistance() < distance - 0.1) || (chassisEncoderLeft.getDistance() > distance + 0.1)) && (gyro.getAngle() != 0)) {
-				this.arcadeDrive(distanceError * kP_DISTANCE, gyroError * kP_ANGLE);
-
-				distanceError = distance - chassisEncoderLeft.getDistance();
-				gyroError = gyro.getAngle() < 180 ? gyro.getAngle() : -(360 - gyro.getAngle());
+		} else {
+			while (this.gyro.getAngle() > angle + 2 && this.gyro.getAngle() < angle - 2) {
+				this.setLeftPower(0.3);
 			}
-			this.stopChassis();
 		}
 
-		/**
-		 * Shifts the chassis into the high gear.
-		 */
-		public void switchToHighGear() {
-			// TODO Check what position is forward and what position is reverse for the piston (extended = high or low gear).
-			this.shiftersPiston.set(Value.kForward);
-		}
+		this.stopChassis();
+	}
 
-		/**
-		 * Shifts the chassis into the low gear.
-		 */
-		public void switchToLowGear() {
-			// TODO Check what position is forward and what position is reverse for the piston (extended = high or low gear).
-			this.shiftersPiston.set(Value.kReverse);
-		}
+	/**
+	 * TWEEK Find real PID values Drives straight a certain distance, for now
+	 * this is only
+	 * 
+	 * @param distance
+	 */
+	@SuppressWarnings("Untested")
+	public void driveStraight(double distance) {
+		gyro.reset();
+		chassisEncoderLeft.reset();
+		chassisEncoderRight.reset();
 
-		/**
-		 * Toggles the shifters between high and low gear.
-		 */
-		public void toggleShifters() {
-			this.shiftersPiston.set(this.shiftersPiston.get().equals(Value.kForward) ? Value.kReverse : Value.kForward);
-		}
+		double distanceError = distance;
+		double gyroError = 0;
 
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+		while (((chassisEncoderLeft.getDistance() < distance - 0.1)
+				|| (chassisEncoderLeft.getDistance() > distance + 0.1)) && (gyro.getAngle() != 0)) {
+			this.arcadeDrive(distanceError * kP_DISTANCE, gyroError * kP_ANGLE);
+
+			distanceError = distance - chassisEncoderLeft.getDistance();
+			gyroError = gyro.getAngle() < 180 ? gyro.getAngle() : -(360 - gyro.getAngle());
+		}
+		this.stopChassis();
+	}
+
+	/**
+	 * Shifts the chassis into the high gear.
+	 */
+	public void switchToHighGear() {
+		// TODO Check what position is forward and what position is reverse for
+		// the piston (extended = high or low gear).
+		this.shiftersPiston.set(Value.kForward);
+	}
+
+	/**
+	 * Shifts the chassis into the low gear.
+	 */
+	public void switchToLowGear() {
+		// TODO Check what position is forward and what position is reverse for
+		// the piston (extended = high or low gear).
+		this.shiftersPiston.set(Value.kReverse);
+	}
+
+	/**
+	 * Toggles the shifters between high and low gear.
+	 */
+	public void toggleShifters() {
+		this.shiftersPiston.set(this.shiftersPiston.get().equals(Value.kForward) ? Value.kReverse : Value.kForward);
+	}
+
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		// setDefaultCommand(new MySpecialCommand());
+	}
 }
-
