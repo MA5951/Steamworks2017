@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team5951.robot;
 
+import org.usfirst.frc.team5951.robot.subsystems.Ascender;
 import org.usfirst.frc.team5951.robot.subsystems.ChassisArcade;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Robot extends IterativeRobot {
 
+	public static final Ascender ascender = new Ascender();
 	public static final ChassisArcade chassisArcade = new ChassisArcade(); 
 	public static OI oi;
 	
