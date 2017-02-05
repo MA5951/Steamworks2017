@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5951.robot.subsystems;
 
 import org.usfirst.frc.team5951.robot.RobotMap;
+import org.usfirst.frc.team5951.robot.commands.chassis.ArcadeDrive;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
@@ -36,8 +37,8 @@ public class ChassisArcade extends Subsystem {
 	private ADXRS450_Gyro gyro;
 
 	// PID values
-	private final double kP_DISTANCE = 0.3;
-	private final double kP_ANGLE = 0.005;
+	public final double kP_DISTANCE = 0.3;
+	public final double kP_ANGLE = 0.005;
 
 	/**
 	 * Constructor for the ChassisArcade class, initializes components.
@@ -120,58 +121,21 @@ public class ChassisArcade extends Subsystem {
 		this.setLeftPower(0);
 	}
 
-	/**
-	 * Turns the chassis to the wanted angle with an offset of 2.
-	 * 
-	 * @param angle
-	 *            - Angle to turn to.
-	 */
-	public void turnToAngle(double angle) {
-		this.gyro.reset();
-
-		if (angle < 0) {
-			angle = 360 - angle;
-			while (this.gyro.getAngle() > angle + 2 && this.gyro.getAngle() < angle - 2) {
-				this.setRightPower(0.3);
-			}
-		} else {
-			while (this.gyro.getAngle() > angle + 2 && this.gyro.getAngle() < angle - 2) {
-				this.setLeftPower(0.3);
-			}
-		}
-
-		this.stopChassis();
+	public double getAngle(){
+		return this.gyro.getAngle();
 	}
-
+	
 	/**
-	 * TWEEK Find real PID values Drives straight a certain distance, for now
-	 * this is only
-	 * 
-	 * @param distance
+	 * Resets gyro
 	 */
-	@SuppressWarnings("Untested")
-	public void driveStraight(double distance) {
-		gyro.reset();
-		chassisEncoderLeft.reset();
-		chassisEncoderRight.reset();
-
-		double distanceError = distance;
-		double gyroError = 0;
-
-		while (((chassisEncoderLeft.getDistance() < distance - 0.1)
-				|| (chassisEncoderLeft.getDistance() > distance + 0.1)) && (gyro.getAngle() != 0)) {
-			this.arcadeDrive(distanceError * kP_DISTANCE, gyroError * kP_ANGLE);
-
-			distanceError = distance - chassisEncoderLeft.getDistance();
-			gyroError = gyro.getAngle() < 180 ? gyro.getAngle() : -(360 - gyro.getAngle());
-		}
-		this.stopChassis();
+	public void resetGyro(){
+		this.gyro.reset();
 	}
 
 	/**
 	 * Shifts the chassis into the high gear.
 	 */
-	public void switchToHighGear() {
+	public void switchToFastGear() {
 		// TODO Check what position is forward and what position is reverse for
 		// the piston (extended = high or low gear).
 		this.shiftersPiston.set(Value.kForward);
@@ -180,7 +144,7 @@ public class ChassisArcade extends Subsystem {
 	/**
 	 * Shifts the chassis into the low gear.
 	 */
-	public void switchToLowGear() {
+	public void switchToStrongGear() {
 		// TODO Check what position is forward and what position is reverse for
 		// the piston (extended = high or low gear).
 		this.shiftersPiston.set(Value.kReverse);
@@ -192,9 +156,21 @@ public class ChassisArcade extends Subsystem {
 	public void toggleShifters() {
 		this.shiftersPiston.set(this.shiftersPiston.get().equals(Value.kForward) ? Value.kReverse : Value.kForward);
 	}
+	
+	/**
+	 * Resets encoders.
+	 */
+	public void resetEncoders(){
+		this.chassisEncoderLeft.reset();
+		this.chassisEncoderRight.reset();
+	}
+	
+	public double getEncoderValue(){
+		return this.chassisEncoderLeft.getDistance();
+	}
 
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
+		setDefaultCommand(new ArcadeDrive());
 		// setDefaultCommand(new MySpecialCommand());
 	}
 }

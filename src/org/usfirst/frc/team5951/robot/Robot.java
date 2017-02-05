@@ -21,6 +21,7 @@ public class Robot extends IterativeRobot {
 	public static final IntakeAndShooter intakeAndShooter = new IntakeAndShooter();
 	public static final Ascender ascender = new Ascender();
 	public static final ChassisArcade chassisArcade = new ChassisArcade(); 
+	
 	public static OI oi;
 	
 	/**
