@@ -144,31 +144,6 @@ public class ChassisArcade extends Subsystem {
 	}
 
 	/**
-	 * TWEEK Find real PID values Drives straight a certain distance, for now
-	 * this is only
-	 * 
-	 * @param distance
-	 */
-	@SuppressWarnings("Untested")
-	public void driveStraight(double distance) {
-		gyro.reset();
-		chassisEncoderLeft.reset();
-		chassisEncoderRight.reset();
-
-		double distanceError = distance;
-		double gyroError = 0;
-
-		while (((chassisEncoderLeft.getDistance() < distance - 0.1)
-				|| (chassisEncoderLeft.getDistance() > distance + 0.1)) && (gyro.getAngle() != 0)) {
-			this.arcadeDrive(distanceError * kP_DISTANCE, gyroError * kP_ANGLE);
-
-			distanceError = distance - chassisEncoderLeft.getDistance();
-			gyroError = gyro.getAngle() < 180 ? gyro.getAngle() : -(360 - gyro.getAngle());
-		}
-		this.stopChassis();
-	}
-
-	/**
 	 * Shifts the chassis into the high gear.
 	 */
 	public void switchToHighGear() {
