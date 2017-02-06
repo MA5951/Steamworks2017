@@ -18,16 +18,33 @@ public class Ascender extends Subsystem {
 		ascenderTalon.changeControlMode(TalonControlMode.PercentVbus);
 	}
 
+	/**
+	 * Lifts the robot up the rope
+	 */
 	public void liftUp() {
 		ascenderTalon.set(1);
 	}
 
+	/**
+	 * Lifts the robot down the rope
+	 */
 	public void liftDown() {
 		ascenderTalon.set(-1);
 	}
 
+	/**
+	 * Stops the robot in it's place.
+	 */
 	public void stopAscender() {
 		ascenderTalon.set(0);
+	}
+	
+	/**
+	 * Sets the power to the ascender motors.
+	 * @param power
+	 */
+	public void setPower(double power){
+		this.ascenderTalon.set(power);
 	}
 
 	public void initDefaultCommand() {

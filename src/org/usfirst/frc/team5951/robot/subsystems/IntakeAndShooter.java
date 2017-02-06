@@ -20,7 +20,9 @@ public class IntakeAndShooter extends Subsystem {
 		this.intakeRear.changeControlMode(TalonControlMode.PercentVbus);
 	}
 
-	// This function intakes the balls into the container.
+	/**
+	 * This function intakes the balls into the container.
+	 */
 	public void intake() {
 		intakeFront.set(-1);
 		intakeRear.set(-1);
