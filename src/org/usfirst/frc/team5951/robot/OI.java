@@ -13,7 +13,7 @@ public class OI {
 	public static final Joystick k_DRIVER_JOYSTICK = new Joystick(0);
 	public static final XboxController k_SYSTEMS_DRIVER_STICK = new XboxController(1);
 
-	public static final JoystickButton k_TOGGLE_SHIFTERS = new JoystickButton(k_DRIVER_JOYSTICK, ButtonNumbers.TRIGGER.getValue());
+	public static final JoystickButton k_TOGGLE_SHIFTERS = new JoystickButton(k_DRIVER_JOYSTICK, ButtonNumbers.TRIGGER.get());
 
 	public OI() {
 
@@ -25,19 +25,19 @@ enum ButtonNumbers {
 
 	// XBOX Buttons
 	// TODO Check if numbers are correct.
-	X(1), 
-	A(2), 
-	B(3), 
+	A(1), 
+	B(2),
+	X(3),
 	Y(4), 
 	BUMPER_LEFT(5), 
-	BUMPER_RIGHT(7),
+	BUMPER_RIGHT(6),
 	LB(5),
-	RB(7),
-	BACK(9), 
-	START(10), 
-	LEFT_STICK_BUTTON(11), 
-	RIGHT_STICK_BUTTON(12), 
-	XBOX_BUTTON(13),
+	RB(6),
+	BACK(7), 
+	START(8), 
+	LEFT_STICK_BUTTON(9), 
+	RIGHT_STICK_BUTTON(10), 
+	XBOX_BUTTON(11),
 	
 	//Logitech Extreme 3D Buttons
 	TRIGGER(1),
