@@ -24,6 +24,7 @@ public class OI {
 enum ButtonNumbers {
 
 	// XBOX Buttons
+	// TODO Check if numbers are correct.
 	X(1), 
 	A(2), 
 	B(3), 
