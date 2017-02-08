@@ -36,6 +36,9 @@ public class ChassisArcade extends Subsystem {
 	// Gyro
 	private ADXRS450_Gyro gyro;
 
+	//Variables
+	public static final double k_JOYSTICK_DEADBAND = 0.05;
+	
 	// PID values
 	// TODO Find PID Values.
 	public final double kP_DISTANCE = 0.3;
