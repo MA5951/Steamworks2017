@@ -51,8 +51,7 @@ public class Crepe extends Subsystem {
 	}
 
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

@@ -49,10 +49,10 @@ public class DriveStraight extends Command {
     }
     
     protected double getDistanceError(){
-    	return this.chassisArcade.getEncoderValue() - this.setpoint;
+    	return this.chassisArcade.getLeftEncoderValue() - this.setpoint;
     }
     
     protected boolean isInAllowedRange(){
-    	return ((this.chassisArcade.getAngle() > -2 && this.chassisArcade.getAngle() < 2) && (this.chassisArcade.getEncoderValue() > setpoint - 2 && this.setpoint < setpoint + 2));
+    	return ((this.chassisArcade.getAngle() > -2 && this.chassisArcade.getAngle() < 2) && (this.chassisArcade.getLeftEncoderValue() > setpoint - 2 && this.setpoint < setpoint + 2));
     }
 }

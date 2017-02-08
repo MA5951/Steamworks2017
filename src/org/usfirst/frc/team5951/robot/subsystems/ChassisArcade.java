@@ -37,6 +37,7 @@ public class ChassisArcade extends Subsystem {
 	private ADXRS450_Gyro gyro;
 
 	// PID values
+	// TODO Find PID Values.
 	public final double kP_DISTANCE = 0.3;
 	public final double kP_ANGLE = 0.005;
 
@@ -49,7 +50,7 @@ public class ChassisArcade extends Subsystem {
 		chassisLeftRear = new CANTalon(RobotMap.k_CHASSIS_LEFT_REAR_TALON);
 		chassisRightFront = new CANTalon(RobotMap.k_CHASSIS_RIGHT_FRONT_TALON);
 		chassisRightRear = new CANTalon(RobotMap.k_CHASSIS_RIGHT_REAR_TALON);
-
+		
 		chassisLeftFront.changeControlMode(TalonControlMode.PercentVbus);
 		chassisLeftRear.changeControlMode(TalonControlMode.Follower);
 		chassisRightFront.changeControlMode(TalonControlMode.PercentVbus);
@@ -165,7 +166,11 @@ public class ChassisArcade extends Subsystem {
 		this.chassisEncoderRight.reset();
 	}
 	
-	public double getEncoderValue(){
+	/**
+	 * Returns the current value of the left encoder
+	 * @return
+	 */
+	public double getLeftEncoderValue(){
 		return this.chassisEncoderLeft.getDistance();
 	}
 

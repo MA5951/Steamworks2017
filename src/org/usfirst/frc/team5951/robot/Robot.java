@@ -89,6 +89,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		
+		//Starts the lift command after end-game starts.
 		if(Timer.getMatchTime() >= 105){
 			new Lift();
 		}
