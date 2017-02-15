@@ -14,14 +14,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DropGearsRight extends CommandGroup {
 
     public DropGearsRight() {
-    	addSequential(new DriveStraight(1080)); //Go forward a bit (needs to be fixed)
-    	addSequential(new TurnToAngle(-45)); //Turn to tower (needs to be fixed)
-    	addSequential(new DriveStraight(420)); //Go to tower (needs to be fixed)
+    	addSequential(new DriveStraight(242)); //Go forward a bit (needs to be fixed)
+    	addSequential(new TurnToAngle(120)); //Turn to tower
+    	addSequential(new DriveStraight(98)); //Go to tower (needs to be fixed)
     	addSequential(new OpenCrepe()); //Drop the Crepe
-    	addSequential(new DriveStraight(-100)); //needs to be fixed
+    	addSequential(new DriveStraight(-103)); //go behid white obstacle
     	addParallel(new CloseCrepe()); //Closes the Crepe 
     	addSequential(new TurnToAngle(0));
-    	addSequential(new DriveStraight(60)); // go Sforward
-    
+    	addSequential(new DriveStraight(707)); // go forward
     }
 }
