@@ -70,6 +70,9 @@ public class ChassisArcade extends Subsystem {
 		// Encoders init
 		chassisEncoderLeft = new Encoder(RobotMap.k_CHASSIS_ENCODER_LEFT_A, RobotMap.k_CHASSIS_ENCODER_LEFT_B);
 		chassisEncoderRight = new Encoder(RobotMap.k_CHASSIS_ENCODER_RIGHT_A, RobotMap.k_CHASSIS_ENCODER_RIGHT_B);
+		chassisEncoderLeft.setReverseDirection(true);
+		chassisEncoderLeft.setDistancePerPulse(1.0 / 1126.8);
+		chassisEncoderRight.setDistancePerPulse(1.0 / 1126.8);
 	}
 
 	/**

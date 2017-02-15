@@ -63,6 +63,7 @@ public class VisionImplementation implements VisionPipeline {
 		ArrayList<MatOfPoint> filterContourInit = filterContourOP;
 
 		biggestContoursOP = filterContours(filterContourInit, 2);
+		
 		contoursAsRects = contoursToRects(biggestContoursOP);
 
 		addRectangleToPictureOnContours(image, contoursAsRects);
@@ -81,7 +82,7 @@ public class VisionImplementation implements VisionPipeline {
 	 */
 	public void getHSVThresholdOutput(Mat input, Mat output) {
 		Imgproc.cvtColor(input, input, Imgproc.COLOR_BGR2HSV);
-		Core.inRange(input, new Scalar(hslThresholdHue[0], hslThresholdSat[0], hslThresholdVal[0]),
+		Core.inRange(input, new Scalar(hslThresholdHue[0], hslThresholdSat[0], hslThresholdVal[0]), 
 				new Scalar(hslThresholdHue[1], hslThresholdSat[1], hslThresholdVal[1]), output);
 	}
 
@@ -231,7 +232,7 @@ public class VisionImplementation implements VisionPipeline {
 	public void addRectangleToPictureOnContours(Mat originalPicture, ArrayList<Rect> rectangles) {
 		for (Rect rectangleToAdd : rectangles) {
 			Imgproc.rectangle(originalPicture, new Point(rectangleToAdd.x, rectangleToAdd.y),
-					new Point(rectangleToAdd.x, rectangleToAdd.y), new Scalar(255, 0, 0), 5);
+					new Point(rectangleToAdd.x + rectangleToAdd.width, rectangleToAdd.y + rectangleToAdd.height), new Scalar(255, 0, 0), 5);
 		}
 		this.matToShow = originalPicture;
 	}
