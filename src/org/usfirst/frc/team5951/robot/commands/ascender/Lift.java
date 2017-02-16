@@ -25,7 +25,7 @@ public class Lift extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	ascender.setPower(OI.k_SYSTEMS_DRIVER_STICK.getTriggerAxis(Hand.kRight));
+    	ascender.setPower(OI.k_SYSTEMS_DRIVER_STICK.getTriggerAxis(Hand.kRight) - OI.k_SYSTEMS_DRIVER_STICK.getTriggerAxis(Hand.kLeft));
     }
 
     // Make this return true when this Command no longer needs to run execute()

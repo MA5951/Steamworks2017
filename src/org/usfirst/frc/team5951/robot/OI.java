@@ -1,10 +1,12 @@
 package org.usfirst.frc.team5951.robot;
 
+import org.usfirst.frc.team5951.robot.commands.ascender.Lift;
 import org.usfirst.frc.team5951.robot.commands.chassis.ToggleShifters;
 import org.usfirst.frc.team5951.robot.commands.crepe.ToggleCrepe;
 import org.usfirst.frc.team5951.robot.commands.intakeAndShooter.Intake;
 import org.usfirst.frc.team5951.robot.commands.intakeAndShooter.Outtake;
 import org.usfirst.frc.team5951.robot.commands.intakeAndShooter.Shoot;
+import org.usfirst.frc.team5951.robot.triggers.StartLift;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -27,10 +29,10 @@ public class OI {
 	public static final JoystickButton k_TOGGLE_CREPE = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.A.get());
 	
 	//Intake and shooter
-	public static final JoystickButton k_INTAKE = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.LB.get());
-	public static final JoystickButton k_SHOOT = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.RB.get());
+	public static final JoystickButton k_INTAKE = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.BUMPER_LEFT.get());
+	public static final JoystickButton k_SHOOT = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.BUMPER_RIGHT.get());
 	public static final JoystickButton k_OUTTAKE = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.B.get());
-	
+	public static final StartLift k_LIFT = new StartLift();
 
 	public OI() {
 		//Chassis buttons
@@ -43,6 +45,8 @@ public class OI {
 		k_INTAKE.whileHeld(new Intake());
 		k_SHOOT.whileHeld(new Shoot());
 		k_OUTTAKE.whileHeld(new Outtake());
+		
+		k_LIFT.whenActive(new Lift());
 	}
 
 }
@@ -75,8 +79,8 @@ enum ButtonNumbers {
 	private int value;
 
 	private ButtonNumbers(int value) {
-			this.value = value;
-		}
+		this.value = value;
+	}
 
 	public int get() {
 		return value;

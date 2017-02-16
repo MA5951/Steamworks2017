@@ -25,6 +25,9 @@ public class ChassisArcade extends Subsystem {
 	private CANTalon chassisLeftRear;
 	private CANTalon chassisRightFront;
 	private CANTalon chassisRightRear;
+	
+	//Variables
+	public static final double k_JOYSTICK_DEADBAND = 0.15;
 
 	// Solenoids (Shifters)
 	private DoubleSolenoid shiftersPiston;
@@ -35,11 +38,15 @@ public class ChassisArcade extends Subsystem {
 
 	// Gyro
 	private ADXRS450_Gyro gyro;
+	
+	//Variables
+	public final double k_GYRO_DISPLACEMENT = 1.013370865587614;
+	public final double k_ENCODERS_DISTANCE_PER_PULSE = (1.0 / 1127.86968);
 
 	// PID values
 	// TODO Find PID Values.
-	public final double kP_DISTANCE = 0.3;
-	public final double kP_ANGLE = 0.005;
+	public final double kP_DISTANCE = 8;
+	public final double kP_ANGLE = 0.15;
 
 	/**
 	 * Constructor for the ChassisArcade class, initializes components.
@@ -55,6 +62,8 @@ public class ChassisArcade extends Subsystem {
 		chassisLeftRear.changeControlMode(TalonControlMode.Follower);
 		chassisRightFront.changeControlMode(TalonControlMode.PercentVbus);
 		chassisRightRear.changeControlMode(TalonControlMode.Follower);
+		
+		chassisRightFront.setInverted(true);
 
 		// Pneumatics Init
 		shiftersPiston = new DoubleSolenoid(RobotMap.k_PCM, RobotMap.k_CHASSIS_SHIFTERS_OPEN,
@@ -172,6 +181,10 @@ public class ChassisArcade extends Subsystem {
 	 */
 	public double getLeftEncoderValue(){
 		return this.chassisEncoderLeft.getDistance();
+	}
+	
+	public void calibrateGyro(){
+		this.gyro.calibrate();
 	}
 
 	public void initDefaultCommand() {

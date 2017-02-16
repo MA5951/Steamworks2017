@@ -12,12 +12,7 @@ public class ToggleCrepe extends InstantCommand {
 
 	Crepe crepe;
     public ToggleCrepe() {
-    	super();
     	crepe = Robot.crepe;
-    	requires(crepe);
-    	
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     }
 
     // Called once when the command executes

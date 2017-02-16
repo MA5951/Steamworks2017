@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5951.robot.subsystems;
 
 import org.usfirst.frc.team5951.robot.RobotMap;
+import org.usfirst.frc.team5951.robot.commands.ascender.Lift;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
@@ -50,5 +51,6 @@ public class Ascender extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new Lift());
 	}
 }

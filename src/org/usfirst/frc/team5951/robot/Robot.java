@@ -1,16 +1,23 @@
 
 package org.usfirst.frc.team5951.robot;
 
-import org.usfirst.frc.team5951.robot.commands.ascender.Lift;
+import org.usfirst.frc.team5951.robot.auton.DoNothing;
+import org.usfirst.frc.team5951.robot.auton.DropGearsLeft;
+import org.usfirst.frc.team5951.robot.auton.DropGearsMiddleBlue;
+import org.usfirst.frc.team5951.robot.auton.DropGearsMiddleRed;
+import org.usfirst.frc.team5951.robot.auton.DropGearsRight;
+import org.usfirst.frc.team5951.robot.auton.PassAutoLine;
+import org.usfirst.frc.team5951.robot.commands.chassis.ShiftToFastGear;
 import org.usfirst.frc.team5951.robot.subsystems.Ascender;
 import org.usfirst.frc.team5951.robot.subsystems.ChassisArcade;
 import org.usfirst.frc.team5951.robot.subsystems.Crepe;
 import org.usfirst.frc.team5951.robot.subsystems.IntakeAndShooter;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,7 +33,11 @@ public class Robot extends IterativeRobot {
 	public static final Crepe crepe = new Crepe();
 	public static final ChassisArcade chassisArcade = new ChassisArcade(); 
 	
+	public CommandGroup autoCommand;
+	
 	public static OI oi;
+	
+	public SendableChooser<CommandGroup> autoChooser;
 	
 	public boolean hadAuto = false;
 	
@@ -37,6 +48,15 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		chassisArcade.calibrateGyro();
+		
+		autoChooser = new SendableChooser<>();
+		autoChooser.addDefault("Middle peg, blue alliance", new DropGearsMiddleBlue());
+		autoChooser.addObject("Middle peg, red alliance", new DropGearsMiddleRed());
+		autoChooser.addObject("Left peg", new DropGearsLeft());
+		autoChooser.addObject("Right peg", new DropGearsRight());
+		autoChooser.addObject("Pass auto line", new PassAutoLine());
+		autoChooser.addObject("Do nothing", new DoNothing());
 	}
 
 	/**
@@ -46,7 +66,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		new ShiftToFastGear();
 	}
 
 	@Override
@@ -66,8 +86,7 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	@Override
-	public void autonomousInit() {
-		hadAuto = true;		
+	public void autonomousInit() {	
 	}
 
 	/**
@@ -91,9 +110,9 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		
 		//Starts the lift command after end-game starts.
-		if(Timer.getMatchTime() >= 105){
+		/*if(Timer.getMatchTime() >= 105){
 			new Lift();
-		}
+		}*/
 	}
 
 	/**

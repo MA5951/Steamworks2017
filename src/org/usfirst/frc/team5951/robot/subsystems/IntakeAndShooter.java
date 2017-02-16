@@ -18,6 +18,9 @@ public class IntakeAndShooter extends Subsystem {
 
 		this.intakeFront.changeControlMode(TalonControlMode.PercentVbus);
 		this.intakeRear.changeControlMode(TalonControlMode.PercentVbus);
+		
+		this.intakeFront.setInverted(true);
+		this.intakeRear.setInverted(true);
 	}
 
 	/**
