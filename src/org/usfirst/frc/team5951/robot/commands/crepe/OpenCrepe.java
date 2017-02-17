@@ -12,12 +12,8 @@ public class OpenCrepe extends InstantCommand {
 
     	Crepe crepe;
         public OpenCrepe() {
-        	super();
         	crepe = Robot.crepe;
         	requires(crepe);
-        	
-            // Use requires() here to declare subsystem dependencies
-            // eg. requires(chassis);
         }
 
         // Called once when the command executes

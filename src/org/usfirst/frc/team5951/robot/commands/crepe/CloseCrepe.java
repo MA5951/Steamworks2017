@@ -15,7 +15,6 @@ public class CloseCrepe extends InstantCommand {
 		super();
 		crepe = Robot.crepe;
 		requires(crepe);
-
 	}
 
 	protected void initialize() {

@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class PassAutoLine extends CommandGroup {
 
     public PassAutoLine() {
-    	addSequential(new DriveStraight(1184));
-    	
+    	addSequential(new DriveStraight(2));
     }
 }

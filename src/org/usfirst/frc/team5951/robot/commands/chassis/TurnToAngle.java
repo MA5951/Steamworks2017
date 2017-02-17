@@ -27,11 +27,11 @@ public class TurnToAngle extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(angle < 180){
-    		this.chassisArcade.setLeftPower(this.getError() * this.chassisArcade.kP_ANGLE);
-    		this.chassisArcade.setRightPower(-(this.getError() * this.chassisArcade.kP_ANGLE));
-    	} else {
-    		this.chassisArcade.setLeftPower(-(this.getError() * this.chassisArcade.kP_ANGLE));
     		this.chassisArcade.setRightPower(this.getError() * this.chassisArcade.kP_ANGLE);
+    		this.chassisArcade.setLeftPower(-(this.getError() * this.chassisArcade.kP_ANGLE));
+    	} else {
+    		this.chassisArcade.setRightPower(-(this.getError() * this.chassisArcade.kP_ANGLE));
+    		this.chassisArcade.setLeftPower(this.getError() * this.chassisArcade.kP_ANGLE);
     	}
     }
 

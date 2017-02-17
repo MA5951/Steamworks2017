@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import util.ChassisMath;
 
 /**
@@ -25,8 +26,8 @@ public class ChassisArcade extends Subsystem {
 	private CANTalon chassisLeftRear;
 	private CANTalon chassisRightFront;
 	private CANTalon chassisRightRear;
-	
-	//Variables
+
+	// Variables
 	public static final double k_JOYSTICK_DEADBAND = 0.15;
 
 	// Solenoids (Shifters)
@@ -38,10 +39,10 @@ public class ChassisArcade extends Subsystem {
 
 	// Gyro
 	private ADXRS450_Gyro gyro;
-	
-	//Variables
+
+	// Variables
 	public final double k_GYRO_DISPLACEMENT = 1.013370865587614;
-	public final double k_ENCODERS_DISTANCE_PER_PULSE = (1.0 / 1127.86968);
+	public final double k_ENCODERS_DISTANCE_PER_PULSE = (1.0 / 1457.471733522452);
 
 	// PID values
 	// TODO Find PID Values.
@@ -57,12 +58,12 @@ public class ChassisArcade extends Subsystem {
 		chassisLeftRear = new CANTalon(RobotMap.k_CHASSIS_LEFT_REAR_TALON);
 		chassisRightFront = new CANTalon(RobotMap.k_CHASSIS_RIGHT_FRONT_TALON);
 		chassisRightRear = new CANTalon(RobotMap.k_CHASSIS_RIGHT_REAR_TALON);
-		
+
 		chassisLeftFront.changeControlMode(TalonControlMode.PercentVbus);
 		chassisLeftRear.changeControlMode(TalonControlMode.Follower);
 		chassisRightFront.changeControlMode(TalonControlMode.PercentVbus);
 		chassisRightRear.changeControlMode(TalonControlMode.Follower);
-		
+
 		chassisRightFront.setInverted(true);
 
 		// Pneumatics Init
@@ -76,6 +77,11 @@ public class ChassisArcade extends Subsystem {
 		// Encoders init
 		chassisEncoderLeft = new Encoder(RobotMap.k_CHASSIS_ENCODER_LEFT_A, RobotMap.k_CHASSIS_ENCODER_LEFT_B);
 		chassisEncoderRight = new Encoder(RobotMap.k_CHASSIS_ENCODER_RIGHT_A, RobotMap.k_CHASSIS_ENCODER_RIGHT_B);
+
+		chassisEncoderLeft.setReverseDirection(true);
+
+		chassisEncoderLeft.setDistancePerPulse(k_ENCODERS_DISTANCE_PER_PULSE);
+		chassisEncoderRight.setDistancePerPulse(k_ENCODERS_DISTANCE_PER_PULSE);
 	}
 
 	/**
@@ -99,6 +105,9 @@ public class ChassisArcade extends Subsystem {
 
 		setLeftPower(chassisValues[0]);
 		setRightPower(chassisValues[1]);
+		
+		SmartDashboard.putNumber("Left chassis value: ", chassisValues[0]);
+    	SmartDashboard.putNumber("Right chassis value: ", chassisValues[1]);
 	}
 
 	/**
@@ -131,14 +140,14 @@ public class ChassisArcade extends Subsystem {
 		this.setLeftPower(0);
 	}
 
-	public double getAngle(){
+	public double getAngle() {
 		return this.gyro.getAngle();
 	}
-	
+
 	/**
 	 * Resets gyro
 	 */
-	public void resetGyro(){
+	public void resetGyro() {
 		this.gyro.reset();
 	}
 
@@ -166,24 +175,33 @@ public class ChassisArcade extends Subsystem {
 	public void toggleShifters() {
 		this.shiftersPiston.set(this.shiftersPiston.get().equals(Value.kForward) ? Value.kReverse : Value.kForward);
 	}
-	
+
 	/**
 	 * Resets encoders.
 	 */
-	public void resetEncoders(){
+	public void resetEncoders() {
 		this.chassisEncoderLeft.reset();
 		this.chassisEncoderRight.reset();
 	}
-	
+
 	/**
 	 * Returns the current value of the left encoder
+	 * 
 	 * @return
 	 */
-	public double getLeftEncoderValue(){
+	public double getLeftEncoderValue() {
 		return this.chassisEncoderLeft.getDistance();
 	}
+
+	public double getRightEncoderValue() {
+		return this.chassisEncoderRight.getDistance();
+	}
 	
-	public void calibrateGyro(){
+	public double getAvgEncoderValue() {
+		return (this.chassisEncoderLeft.getDistance() + this.chassisEncoderRight.getDistance()) / 2;
+	}
+
+	public void calibrateGyro() {
 		this.gyro.calibrate();
 	}
 

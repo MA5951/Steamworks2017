@@ -7,7 +7,7 @@ import org.usfirst.frc.team5951.robot.auton.DropGearsMiddleBlue;
 import org.usfirst.frc.team5951.robot.auton.DropGearsMiddleRed;
 import org.usfirst.frc.team5951.robot.auton.DropGearsRight;
 import org.usfirst.frc.team5951.robot.auton.PassAutoLine;
-import org.usfirst.frc.team5951.robot.commands.chassis.ShiftToFastGear;
+import org.usfirst.frc.team5951.robot.commands.crepe.CloseCrepe;
 import org.usfirst.frc.team5951.robot.subsystems.Ascender;
 import org.usfirst.frc.team5951.robot.subsystems.ChassisArcade;
 import org.usfirst.frc.team5951.robot.subsystems.Crepe;
@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -57,6 +58,8 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Right peg", new DropGearsRight());
 		autoChooser.addObject("Pass auto line", new PassAutoLine());
 		autoChooser.addObject("Do nothing", new DoNothing());
+		
+		SmartDashboard.putData("Autonomous chooser: ", autoChooser);
 	}
 
 	/**
@@ -66,7 +69,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		new ShiftToFastGear();
+//		new ShiftToFastGear();
+		new CloseCrepe();
+		Scheduler.getInstance().removeAll();
 	}
 
 	@Override
@@ -87,6 +92,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {	
+		autoCommand = (CommandGroup) autoChooser.getSelected();
+		if(autoCommand != null){
+			autoCommand.start();
+		}
 	}
 
 	/**

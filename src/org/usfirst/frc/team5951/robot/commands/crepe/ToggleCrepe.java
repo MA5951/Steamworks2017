@@ -13,6 +13,7 @@ public class ToggleCrepe extends InstantCommand {
 	Crepe crepe;
     public ToggleCrepe() {
     	crepe = Robot.crepe;
+    	requires(crepe);
     }
 
     // Called once when the command executes
