@@ -31,8 +31,8 @@ public class RobotMap {
 	
 	//Sensors
 	//Chassis Encoders
-	public static final int k_CHASSIS_ENCODER_LEFT_A = 0;
-	public static final int k_CHASSIS_ENCODER_LEFT_B = 1;
-	public static final int k_CHASSIS_ENCODER_RIGHT_A = 2;
-	public static final int k_CHASSIS_ENCODER_RIGHT_B = 3;
+	public static final int k_CHASSIS_ENCODER_LEFT_A = 4;
+	public static final int k_CHASSIS_ENCODER_LEFT_B = 5;
+	public static final int k_CHASSIS_ENCODER_RIGHT_A = 6;
+	public static final int k_CHASSIS_ENCODER_RIGHT_B = 7;
 }

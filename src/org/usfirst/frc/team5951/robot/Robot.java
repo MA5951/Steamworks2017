@@ -108,7 +108,9 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		
+		if(autoCommand != null){
+			autoCommand.cancel();
+		}
 	}
 
 	/**

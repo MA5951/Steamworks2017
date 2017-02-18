@@ -23,22 +23,21 @@ public class DriveStraight extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-			this.chassisArcade.switchToStrongGear();
+		this.chassisArcade.switchToStrongGear();
 		this.chassisArcade.resetGyro();
 		this.chassisArcade.resetEncoders();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		this.chassisArcade.arcadeDrive(this.chassisArcade.kP_DISTANCE * this.getDistanceError(),
-				this.chassisArcade.kP_ANGLE * this.chassisArcade.getAngle());
+		this.chassisArcade.arcadeDrive(this.chassisArcade.kP_DISTANCE * this.getDistanceError(), this.chassisArcade.kP_ANGLE * this.chassisArcade.getAngle());
 		SmartDashboard.putNumber("left encoder value: ", this.chassisArcade.getLeftEncoderValue());
 		SmartDashboard.putNumber("right encoder value: ", this.chassisArcade.getRightEncoderValue());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Math.abs(getDistanceError()) > 0.05;
+		return isInAllowedRange();
 	}
 
 	// Called once after isFinished returns true
@@ -57,10 +56,10 @@ public class DriveStraight extends Command {
 	protected double getDistanceError() {
 		double error = setpoint - this.chassisArcade.getAvgEncoderValue();
 		
-		return error;
+		return -error;
 	}
 
 	protected boolean isInAllowedRange() {
-		return (Math.abs(this.chassisArcade.getAngle()) < 2 && Math.abs(getDistanceError()) < 0.1);
+		return (Math.abs(this.chassisArcade.getAngle()) < 2 && Math.abs(getDistanceError()) < 0.15);
 	}
 }

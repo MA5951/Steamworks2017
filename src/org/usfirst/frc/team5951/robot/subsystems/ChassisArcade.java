@@ -198,7 +198,7 @@ public class ChassisArcade extends Subsystem {
 	}
 	
 	public double getAvgEncoderValue() {
-		return (this.chassisEncoderLeft.getDistance() + this.chassisEncoderRight.getDistance()) / 2;
+		return (this.chassisEncoderLeft.getDistance() + this.chassisEncoderRight.getDistance()) / 2.0;
 	}
 
 	public void calibrateGyro() {
