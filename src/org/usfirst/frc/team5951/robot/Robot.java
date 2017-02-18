@@ -2,10 +2,12 @@
 package org.usfirst.frc.team5951.robot;
 
 import org.usfirst.frc.team5951.robot.auton.DoNothing;
-import org.usfirst.frc.team5951.robot.auton.DropGearsLeft;
+import org.usfirst.frc.team5951.robot.auton.DropGearsLeftPassAutoLine;
+import org.usfirst.frc.team5951.robot.auton.DropGearsLeftShoot;
 import org.usfirst.frc.team5951.robot.auton.DropGearsMiddleBlue;
 import org.usfirst.frc.team5951.robot.auton.DropGearsMiddleRed;
-import org.usfirst.frc.team5951.robot.auton.DropGearsRight;
+import org.usfirst.frc.team5951.robot.auton.DropGearsRightPassAutoLine;
+import org.usfirst.frc.team5951.robot.auton.DropGearsRightShoot;
 import org.usfirst.frc.team5951.robot.auton.PassAutoLine;
 import org.usfirst.frc.team5951.robot.commands.crepe.CloseCrepe;
 import org.usfirst.frc.team5951.robot.subsystems.Ascender;
@@ -54,8 +56,10 @@ public class Robot extends IterativeRobot {
 		autoChooser = new SendableChooser<>();
 		autoChooser.addDefault("Middle peg, blue alliance", new DropGearsMiddleBlue());
 		autoChooser.addObject("Middle peg, red alliance", new DropGearsMiddleRed());
-		autoChooser.addObject("Left peg", new DropGearsLeft());
-		autoChooser.addObject("Right peg", new DropGearsRight());
+		autoChooser.addObject("Left peg, pass auto", new DropGearsLeftPassAutoLine());
+		autoChooser.addObject("Left peg, shoot low goal", new DropGearsLeftShoot());
+		autoChooser.addObject("Right peg, pass auto", new DropGearsRightPassAutoLine());
+		autoChooser.addDefault("Right peg, shoot low goal", new DropGearsRightShoot());
 		autoChooser.addObject("Pass auto line", new PassAutoLine());
 		autoChooser.addObject("Do nothing", new DoNothing());
 		

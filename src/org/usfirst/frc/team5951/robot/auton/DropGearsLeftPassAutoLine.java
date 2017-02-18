@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *@author Omer Libai
  *a command group that assumes you start at the left side, drops a gear and goes forward
  */
-public class DropGearsLeft extends CommandGroup {
+public class DropGearsLeftPassAutoLine extends CommandGroup {
 
-    public DropGearsLeft() {
+    public DropGearsLeftPassAutoLine() {
     	addSequential(new DriveStraight(242)); //Go forward a bit (needs to be fixed)
     	addSequential(new TurnToAngle(-120)); //Turn to tower
     	addSequential(new DriveStraight(98)); //Go to tower (needs to be fixed)
