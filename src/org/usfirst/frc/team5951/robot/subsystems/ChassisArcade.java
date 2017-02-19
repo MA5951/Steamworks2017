@@ -64,6 +64,11 @@ public class ChassisArcade extends Subsystem {
 		chassisRightFront.changeControlMode(TalonControlMode.PercentVbus);
 		chassisRightRear.changeControlMode(TalonControlMode.Follower);
 
+		chassisLeftFront.enableBrakeMode(true);
+		chassisLeftRear.enableBrakeMode(true);
+		chassisRightFront.enableBrakeMode(true);
+		chassisRightRear.enableBrakeMode(true);
+		
 		chassisRightFront.setInverted(true);
 
 		// Pneumatics Init

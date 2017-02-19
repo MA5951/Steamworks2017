@@ -3,6 +3,7 @@ package org.usfirst.frc.team5951.robot;
 import org.usfirst.frc.team5951.robot.commands.ascender.Lift;
 import org.usfirst.frc.team5951.robot.commands.chassis.ToggleShifters;
 import org.usfirst.frc.team5951.robot.commands.crepe.ToggleCrepe;
+import org.usfirst.frc.team5951.robot.commands.crepe.ToggleHelpers;
 import org.usfirst.frc.team5951.robot.commands.intakeAndShooter.Intake;
 import org.usfirst.frc.team5951.robot.commands.intakeAndShooter.Outtake;
 import org.usfirst.frc.team5951.robot.commands.intakeAndShooter.Shoot;
@@ -17,7 +18,11 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-
+	
+	//Variables
+	public static boolean isHelpersOpen = false;
+	
+	//Joysticks
 	public static final Joystick k_DRIVER_JOYSTICK = new Joystick(0);
 	public static final XboxController k_SYSTEMS_DRIVER_STICK = new XboxController(1);
 
@@ -27,6 +32,7 @@ public class OI {
 	//Yaniv buttons
 	//Crepe
 	public static final JoystickButton k_TOGGLE_CREPE = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.A.get());
+	public static final JoystickButton k_TOGGLE_HELPERS = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.X.get());
 	
 	//Intake and shooter
 	public static final JoystickButton k_INTAKE = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.BUMPER_LEFT.get());
@@ -41,6 +47,7 @@ public class OI {
 		
 		//Crepe buttons
 		k_TOGGLE_CREPE.whenPressed(new ToggleCrepe());
+		k_TOGGLE_HELPERS.whenPressed(new ToggleHelpers());
 		
 		//Intake and shooter buttons
 		k_INTAKE.whileHeld(new Intake());
