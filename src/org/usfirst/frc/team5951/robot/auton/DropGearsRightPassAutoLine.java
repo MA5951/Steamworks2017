@@ -6,7 +6,7 @@ import org.usfirst.frc.team5951.robot.commands.crepe.CloseCrepe;
 import org.usfirst.frc.team5951.robot.commands.crepe.OpenCrepe;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
+import util.WaitCommand;
 
 /**
  *@author Omer Libai
@@ -15,14 +15,16 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 public class DropGearsRightPassAutoLine extends CommandGroup {
 
     public DropGearsRightPassAutoLine() {
-    	addSequential(new DriveStraight(2.085)); //Go forward a bit (needs to be fixed)
-    	addSequential(new TurnToAngle(-46)); //Turn to tower
+    	//worked before, needs more testing
+    	addSequential(new DriveStraight(2.0)); //Go forward a bit
+    	addSequential(new TurnToAngle(-48.5)); //Turn to tower
     	addSequential(new util.WaitCommand(), 0.3);
-    	addSequential(new DriveStraight(0.6)); //Go to tower (needs to be fixed)
+    	addSequential(new DriveStraight(0.545)); //Go to tower 
     	addSequential(new OpenCrepe()); //Drop the Crepe
-    	addSequential(new DriveStraight(-1.03)); //go behid white obstacle
-    	addParallel(new CloseCrepe()); //Closes the Crepe 
-    	/*addSequential(new TurnToAngle(0));
-    	addSequential(new DriveStraight(707)); // go forward
-*/    }
+    	addSequential(new DriveStraight(-1.03)); //go behind white obstacle
+    	addParallel(new CloseCrepe()); //Closes the Crepe
+    	addSequential(new TurnToAngle(48.5)); // turn straight
+    	addSequential(new WaitCommand(), 0.2);
+    	addSequential(new DriveStraight(5)); //straight ahead!    	
+   }
 }

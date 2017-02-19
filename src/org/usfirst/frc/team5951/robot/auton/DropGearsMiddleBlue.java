@@ -11,7 +11,8 @@ import util.WaitCommand;
  *
  */
 public class DropGearsMiddleBlue extends CommandGroup {
-
+//Done!
+//Test again to see if robot changes affected this auto run.
     public DropGearsMiddleBlue() {
         addSequential(new DriveStraight(1.48));
         addSequential(new OpenCrepe());

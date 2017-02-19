@@ -57,9 +57,9 @@ public class Robot extends IterativeRobot {
 		autoChooser.addDefault("Middle peg, blue alliance", new DropGearsMiddleBlue());
 		autoChooser.addObject("Middle peg, red alliance", new DropGearsMiddleRed());
 		autoChooser.addObject("Left peg, pass auto", new DropGearsLeftPassAutoLine());
-		autoChooser.addObject("Left peg, shoot low goal", new DropGearsLeftShoot());
+		autoChooser.addObject("Left peg, shoot low goal (blue)", new DropGearsLeftShoot());
 		autoChooser.addObject("Right peg, pass auto", new DropGearsRightPassAutoLine());
-		autoChooser.addDefault("Right peg, shoot low goal", new DropGearsRightShoot());
+		autoChooser.addDefault("Right peg, shoot low goal (red)", new DropGearsRightShoot());
 		autoChooser.addObject("Pass auto line", new PassAutoLine());
 		autoChooser.addObject("Do nothing", new DoNothing());
 		

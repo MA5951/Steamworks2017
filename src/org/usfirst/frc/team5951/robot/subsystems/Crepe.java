@@ -2,6 +2,10 @@ package org.usfirst.frc.team5951.robot.subsystems;
 
 import org.usfirst.frc.team5951.robot.RobotMap;
 
+
+//import com.ctre.CANTalon;
+//for crepe talons if we use them
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -14,12 +18,21 @@ public class Crepe extends Subsystem {
 
 	public DoubleSolenoid crepeSolenoid;
 	boolean isCrepeOpen;
+	/*CANTalon crepeLeftTalon;
+	CANTalon crepeRightTalon;
+	might add this
+	 */	
 	/**
 	 * crepe constructor
 	 */
 	public Crepe() {
 		crepeSolenoid = new DoubleSolenoid(RobotMap.k_CREPE_PISTON_FORWARD, RobotMap.k_CREPE_PISTON_REVERSE);
 		isCrepeOpen = false;
+		/*crepeLeftTalon = new CANTalon(RobotMap.k_LEFT_CREPE_TALON);
+		crepeRightTalon = new CANTalon(RobotMap.k_RIGHT_CREPE_TALON);
+		might add this
+		*/
+		
 	}
 
 	/**
@@ -48,8 +61,19 @@ public class Crepe extends Subsystem {
 		}
 
 		this.openCrepe();
+	}/*
+	public void crepeTalonsForward(){
+		 crepeLeftTalon.set(1);
+		 crepeRightTalon.set(1);
 	}
-
+	public void crepeTalonsBack(){
+	crepeRightTalon.set(-1);
+	crepeLeftTalon.set(1);
+	}
+	
+	COMMANDS NEED TO BE MADE IF WE WANT TO USE THIS
+	
+	*/
 	protected void initDefaultCommand() {
 		
 	}
