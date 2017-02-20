@@ -9,10 +9,9 @@ import org.usfirst.frc.team5951.robot.auton.DropGearsMiddleRed;
 import org.usfirst.frc.team5951.robot.auton.DropGearsRightPassAutoLine;
 import org.usfirst.frc.team5951.robot.auton.DropGearsRightShoot;
 import org.usfirst.frc.team5951.robot.auton.PassAutoLine;
-import org.usfirst.frc.team5951.robot.commands.crepe.CloseCrepe;
 import org.usfirst.frc.team5951.robot.subsystems.Ascender;
 import org.usfirst.frc.team5951.robot.subsystems.ChassisArcade;
-import org.usfirst.frc.team5951.robot.subsystems.Crepe;
+import org.usfirst.frc.team5951.robot.subsystems.GearsSubsystem;
 import org.usfirst.frc.team5951.robot.subsystems.IntakeAndShooter;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -33,7 +32,7 @@ public class Robot extends IterativeRobot {
 
 	public static final IntakeAndShooter intakeAndShooter = new IntakeAndShooter();
 	public static final Ascender ascender = new Ascender();
-	public static final Crepe crepe = new Crepe();
+	public static final GearsSubsystem gearsSubsystem = new GearsSubsystem();
 	public static final ChassisArcade chassisArcade = new ChassisArcade(); 
 	
 	public CommandGroup autoCommand;
@@ -73,8 +72,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-//		new ShiftToFastGear();
-		new CloseCrepe();
 		Scheduler.getInstance().removeAll();
 	}
 

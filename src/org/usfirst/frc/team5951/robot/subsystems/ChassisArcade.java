@@ -45,7 +45,6 @@ public class ChassisArcade extends Subsystem {
 	public final double k_ENCODERS_DISTANCE_PER_PULSE = (1.0 / 1457.471733522452);
 
 	// PID values
-	// TODO Find PID Values.
 	public final double kP_DISTANCE = 8;
 	public final double kP_ANGLE = 0.15;
 
@@ -160,8 +159,6 @@ public class ChassisArcade extends Subsystem {
 	 * Shifts the chassis into the high gear.
 	 */
 	public void switchToFastGear() {
-		// TODO Check what position is forward and what position is reverse for
-		// the piston (extended = high or low gear).
 		this.shiftersPiston.set(Value.kForward);
 	}
 
@@ -169,8 +166,6 @@ public class ChassisArcade extends Subsystem {
 	 * Shifts the chassis into the low gear.
 	 */
 	public void switchToStrongGear() {
-		// TODO Check what position is forward and what position is reverse for
-		// the piston (extended = high or low gear).
 		this.shiftersPiston.set(Value.kReverse);
 	}
 

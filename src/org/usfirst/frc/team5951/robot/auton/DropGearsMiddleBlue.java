@@ -2,7 +2,6 @@ package org.usfirst.frc.team5951.robot.auton;
 
 import org.usfirst.frc.team5951.robot.commands.chassis.DriveStraight;
 import org.usfirst.frc.team5951.robot.commands.chassis.TurnToAngle;
-import org.usfirst.frc.team5951.robot.commands.crepe.OpenCrepe;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import util.WaitCommand;
@@ -15,7 +14,7 @@ public class DropGearsMiddleBlue extends CommandGroup {
 //Test again to see if robot changes affected this auto run.
     public DropGearsMiddleBlue() {
         addSequential(new DriveStraight(1.48));
-        addSequential(new OpenCrepe());
+//        addSequential(new OpenCrepe());
         addSequential(new WaitCommand(), 0.3);
         addSequential(new DriveStraight(-0.9));
         addSequential(new TurnToAngle(60));
