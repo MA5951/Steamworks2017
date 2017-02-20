@@ -2,6 +2,7 @@ package org.usfirst.frc.team5951.robot;
 
 import org.usfirst.frc.team5951.robot.commands.ascender.Lift;
 import org.usfirst.frc.team5951.robot.commands.chassis.ToggleShifters;
+import org.usfirst.frc.team5951.robot.commands.gearsSubsystem.ToggleGearsSubsystem;
 import org.usfirst.frc.team5951.robot.commands.intakeAndShooter.Intake;
 import org.usfirst.frc.team5951.robot.commands.intakeAndShooter.Outtake;
 import org.usfirst.frc.team5951.robot.commands.intakeAndShooter.Shoot;
@@ -28,9 +29,8 @@ public class OI {
 	public static final JoystickButton k_TOGGLE_SHIFTERS = new JoystickButton(k_DRIVER_JOYSTICK, ButtonNumbers.TRIGGER.get());
 	
 	//Yaniv buttons
-	//Crepe
-	public static final JoystickButton k_TOGGLE_CREPE = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.A.get());
-	public static final JoystickButton k_TOGGLE_HELPERS = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.X.get());
+	//Gears subsystem
+	public static final JoystickButton k_TOGGLE_GEARS_SUBSYSTEM = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.A.get());
 	
 	//Intake and shooter
 	public static final JoystickButton k_INTAKE = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.BUMPER_LEFT.get());
@@ -42,6 +42,9 @@ public class OI {
 	public OI() {
 		//Chassis buttons
 		k_TOGGLE_SHIFTERS.whenPressed(new ToggleShifters());
+		
+		//Gears subsystem
+		k_TOGGLE_GEARS_SUBSYSTEM.whenActive(new ToggleGearsSubsystem());
 		
 		//Intake and shooter buttons
 		k_INTAKE.whileHeld(new Intake());

@@ -26,5 +26,9 @@ public class ToggleGearsSubsystem extends InstantCommand {
     	}
     	this.gearsSubsystem.toggleIsOpen();
     }
+    
+    protected void interrupted() {
+    	this.gearsSubsystem.stopGearsSubsystem();
+    }
 
 }
