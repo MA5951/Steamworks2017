@@ -19,16 +19,6 @@ public class ToggleGearsSubsystem extends InstantCommand {
 
     // Called once when the command executes
     protected void initialize() {
-    	if(this.gearsSubsystem.isOpen){
-    		this.gearsSubsystem.closeGearsSubsystem();
-    	} else {
-    		this.gearsSubsystem.openGearsSubsystem();
-    	}
-    	this.gearsSubsystem.toggleIsOpen();
+    	this.gearsSubsystem.toggleSolenoids();
     }
-    
-    protected void interrupted() {
-    	this.gearsSubsystem.stopGearsSubsystem();
-    }
-
 }

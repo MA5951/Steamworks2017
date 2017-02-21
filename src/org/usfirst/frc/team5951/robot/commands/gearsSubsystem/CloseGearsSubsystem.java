@@ -22,9 +22,4 @@ public class CloseGearsSubsystem extends InstantCommand {
     protected void initialize() {
     	this.gearsSubsystem.closeGearsSubsystem();
     }
-    
-    protected void interrupted(){
-    	this.gearsSubsystem.stopGearsSubsystem();
-    }
-
 }

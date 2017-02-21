@@ -19,14 +19,15 @@ public class RobotMap {
 	// Ascender ports
 	public static final int k_ASCENDER_TALON = 7;
 
-	// Gears subsystem ports
-	public static final int k_GEARS_SUBSYSTEM_TALON = 8;
-
 	/*
 	 * Pneumatics
 	 */
 	// General
 	public static final int k_PCM = 0;
+
+	// Gears subsystem ports
+	public static final int k_GEARS_SUBSYSTEM_SOLENOID_OPEN = 0;
+	public static final int k_GEARS_SUBSYSTEM_SOLENOID_CLOSED = 1;
 
 	// Chassis
 	public static final int k_CHASSIS_SHIFTERS_OPEN = 2;
@@ -40,8 +41,4 @@ public class RobotMap {
 	public static final int k_CHASSIS_ENCODER_LEFT_B = 5;
 	public static final int k_CHASSIS_ENCODER_RIGHT_A = 6;
 	public static final int k_CHASSIS_ENCODER_RIGHT_B = 7;
-	
-	//Gears subsystem encoders
-	public static final int k_GEARS_SUBSYSTEM_ENCODER_A = 0;
-	public static final int k_GEARS_SUBSYSTEM_ENCODER_B = 1;
 }

@@ -24,7 +24,6 @@ public class OpenGearsSubsystem extends InstantCommand {
 	}
 
 	protected void interrupted() {
-		gearsSubsystem.stopGearsSubsystem();
 	}
 
 }
