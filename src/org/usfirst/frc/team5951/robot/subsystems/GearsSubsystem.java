@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
+
 public class GearsSubsystem extends Subsystem {
 
 	// Solenoids
 	private DoubleSolenoid gearsSubsystemSolenoid;
 
-	private boolean isOpen;
 
 	public GearsSubsystem() {
 		this.gearsSubsystemSolenoid = new DoubleSolenoid(RobotMap.k_PCM, RobotMap.k_GEARS_SUBSYSTEM_SOLENOID_OPEN,
@@ -22,7 +22,6 @@ public class GearsSubsystem extends Subsystem {
 		
 		this.gearsSubsystemSolenoid.set(Value.kReverse);
 		
-		this.isOpen = false;
 	}
 
 	/**
@@ -30,22 +29,25 @@ public class GearsSubsystem extends Subsystem {
 	 */
 	public void closeGearsSubsystem() {
 		this.gearsSubsystemSolenoid.set(Value.kReverse);
-		this.isOpen = false;
 	}
 
 	/**
 	 * Opens the subsystem
 	 */
 	public void openGearsSubsystem() {
-		this.gearsSubsystemSolenoid.set(Value.kReverse);
-		this.isOpen = !this.isOpen;
+		this.gearsSubsystemSolenoid.set(Value.kForward);
 	}
 
 	/**
 	 * Toggles between the open value of the solenoid or the wrong one.
 	 */
 	public void toggleSolenoids() {
-		this.gearsSubsystemSolenoid.set(isOpen ? Value.kReverse : Value.kForward);
+		if(this.gearsSubsystemSolenoid.get().equals(Value.kForward)){
+			this.gearsSubsystemSolenoid.set(Value.kReverse);
+		} else {
+			this.gearsSubsystemSolenoid.set(Value.kForward);
+		}
+		
 	}
 
 	public void initDefaultCommand() {
