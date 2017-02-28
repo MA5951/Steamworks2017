@@ -15,7 +15,7 @@ public class DropGearsMiddleBlue extends CommandGroup {
 //Done!
 //Test again to see if robot changes affected this auto run.
     public DropGearsMiddleBlue() {
-        addSequential(new DriveStraight(1.48));
+        addSequential(new DriveStraight(1.845));
         addSequential(new OpenGearsSubsystem());
         addSequential(new WaitCommand(), 0.3);
         addSequential(new DriveStraight(-0.9));

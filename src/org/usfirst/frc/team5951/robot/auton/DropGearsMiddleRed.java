@@ -14,7 +14,7 @@ import util.WaitCommand;
 public class DropGearsMiddleRed extends CommandGroup {
 
 	public DropGearsMiddleRed() {
-		addSequential(new DriveStraight(1.48));
+		addSequential(new DriveStraight(1.845));
 		addSequential(new OpenGearsSubsystem());
 		addSequential(new WaitCommand(), 0.25);
 		addSequential(new DriveStraight(-0.9));
