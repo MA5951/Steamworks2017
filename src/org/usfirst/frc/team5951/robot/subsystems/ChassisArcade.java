@@ -43,6 +43,7 @@ public class ChassisArcade extends Subsystem {
 	// Variables
 	public final double k_GYRO_DISPLACEMENT = 1.013370865587614;
 	public final double k_ENCODERS_DISTANCE_PER_PULSE = (1.0 / 1457.471733522452);
+	private int chassisMultiplyer = 1;
 
 	// PID values
 	public final double kP_DISTANCE = 8;
@@ -108,7 +109,7 @@ public class ChassisArcade extends Subsystem {
 	}
 
 	public void arcadeDrive(double moveValue, double rotateValue) {
-		double[] chassisValues = ChassisMath.calculatePower(moveValue, rotateValue);
+		double[] chassisValues = ChassisMath.calculatePower(moveValue * chassisMultiplyer, rotateValue);
 
 		setLeftPower(chassisValues[0]);
 		setRightPower(chassisValues[1]);
@@ -196,16 +197,33 @@ public class ChassisArcade extends Subsystem {
 		return this.chassisEncoderLeft.getDistance();
 	}
 
+	/**
+	 * Returns the right encoder value
+	 * @return
+	 */
 	public double getRightEncoderValue() {
 		return this.chassisEncoderRight.getDistance();
 	}
 	
+	/**
+	 * Returns the average between the encoders.
+	 */
 	public double getAvgEncoderValue() {
 		return (this.chassisEncoderLeft.getDistance() + this.chassisEncoderRight.getDistance()) / 2.0;
 	}
 
+	/**
+	 * Calibrates the gyro
+	 */
 	public void calibrateGyro() {
 		this.gyro.calibrate();
+	}
+	
+	/**
+	 * Inverts forward and reverse of chassis
+	 */
+	public void invertChassis(){
+		this.chassisMultiplyer = 0 - this.chassisMultiplyer;
 	}
 
 	public void initDefaultCommand() {

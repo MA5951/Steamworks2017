@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5951.robot;
 
 import org.usfirst.frc.team5951.robot.commands.ascender.Lift;
+import org.usfirst.frc.team5951.robot.commands.chassis.InvertChassis;
 import org.usfirst.frc.team5951.robot.commands.chassis.ToggleShifters;
 import org.usfirst.frc.team5951.robot.commands.gearsSubsystem.ToggleGearsSubsystem;
 import org.usfirst.frc.team5951.robot.commands.intakeAndShooter.Intake;
@@ -18,15 +19,13 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	
-	//Variables
-	public static boolean isHelpersOpen = false;
-	
 	//Joysticks
 	public static final Joystick k_DRIVER_JOYSTICK = new Joystick(0);
 	public static final XboxController k_SYSTEMS_DRIVER_STICK = new XboxController(1);
 
 	//Yair buttons
 	public static final JoystickButton k_TOGGLE_SHIFTERS = new JoystickButton(k_DRIVER_JOYSTICK, ButtonNumbers.TRIGGER.get());
+	public static final JoystickButton k_INVERT_CHASSIS = new JoystickButton(k_DRIVER_JOYSTICK, ButtonNumbers.THUMB_BUTTON.get());
 	
 	//Yaniv buttons
 	//Gears subsystem
@@ -42,6 +41,7 @@ public class OI {
 	public OI() {
 		//Chassis buttons
 		k_TOGGLE_SHIFTERS.whenPressed(new ToggleShifters());
+		k_INVERT_CHASSIS.whenPressed(new InvertChassis());
 		
 		//Gears subsystem
 		k_TOGGLE_GEARS_SUBSYSTEM.whenActive(new ToggleGearsSubsystem());
