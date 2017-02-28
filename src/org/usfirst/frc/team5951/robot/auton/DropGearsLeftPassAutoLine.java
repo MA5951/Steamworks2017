@@ -17,11 +17,12 @@ public class DropGearsLeftPassAutoLine extends CommandGroup {
     public DropGearsLeftPassAutoLine() {
     	
     	//Exactly like the right version except angles are the opposite. Needs testing.
-    	addSequential(new DriveStraight(2.0)); //Go forward a bit
+    	addSequential(new DriveStraight(1.925)); //Go forward a bit
     	addSequential(new TurnToAngle(48.5)); //Turn to tower
     	addSequential(new WaitCommand(), 0.2);
-    	addSequential(new DriveStraight(0.545)); //Go to tower 
+    	addSequential(new DriveStraight(0.67)); //Go to tower 
     	addSequential(new OpenGearsSubsystem()); //Drop the Crepe
+    	addSequential(new WaitCommand(), 0.15);
     	addSequential(new DriveStraight(-1.03)); //go behind white obstacle
     	addParallel(new CloseGearsSubsystem()); //Closes the Crepe
     	addSequential(new TurnToAngle(-48.5)); // turn straight
