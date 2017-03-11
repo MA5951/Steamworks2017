@@ -6,14 +6,16 @@ import org.usfirst.frc.team5951.robot.auton.DropGearsLeftPassAutoLine;
 import org.usfirst.frc.team5951.robot.auton.DropGearsLeftShoot;
 import org.usfirst.frc.team5951.robot.auton.DropGearsMiddleBlue;
 import org.usfirst.frc.team5951.robot.auton.DropGearsMiddleRed;
-import org.usfirst.frc.team5951.robot.auton.DropGearsRightPassAutoLine;
+import org.usfirst.frc.team5951.robot.auton.DropGearsRightPassAutoPregional;
 import org.usfirst.frc.team5951.robot.auton.DropGearsRightShoot;
 import org.usfirst.frc.team5951.robot.auton.PassAutoLine;
 import org.usfirst.frc.team5951.robot.subsystems.Ascender;
 import org.usfirst.frc.team5951.robot.subsystems.ChassisArcade;
-import org.usfirst.frc.team5951.robot.subsystems.GearsSubsystem;
-import org.usfirst.frc.team5951.robot.subsystems.IntakeAndShooter;
+import org.usfirst.frc.team5951.robot.subsystems.FloorGearsIntake;
+import org.usfirst.frc.team5951.robot.subsystems.HPGearsSubsystem;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -30,10 +32,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final IntakeAndShooter intakeAndShooter = new IntakeAndShooter();
 	public static final Ascender ascender = new Ascender();
-	public static final GearsSubsystem gearsSubsystem = new GearsSubsystem();
+	public static final HPGearsSubsystem hpGearsSubsystem = new HPGearsSubsystem();
 	public static final ChassisArcade chassisArcade = new ChassisArcade(); 
+	public static final FloorGearsIntake floorGearsIntake = new FloorGearsIntake();
 	
 	public CommandGroup autoCommand;
 	
@@ -42,6 +44,8 @@ public class Robot extends IterativeRobot {
 	public SendableChooser<CommandGroup> autoChooser;
 	
 	public boolean hadAuto = false;
+	
+	private UsbCamera camera;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -57,12 +61,14 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Middle peg, red alliance", new DropGearsMiddleRed());
 		autoChooser.addObject("Left peg, pass auto", new DropGearsLeftPassAutoLine());
 		autoChooser.addObject("Left peg, shoot low goal (blue)", new DropGearsLeftShoot());
-		autoChooser.addObject("Right peg, pass auto", new DropGearsRightPassAutoLine());
+		autoChooser.addObject("Right peg, pass auto", new DropGearsRightPassAutoPregional());
 		autoChooser.addDefault("Right peg, shoot low goal (red)", new DropGearsRightShoot());
 		autoChooser.addObject("Pass auto line", new PassAutoLine());
 		autoChooser.addObject("Do nothing", new DoNothing());
 		
 		SmartDashboard.putData("Autonomous chooser: ", autoChooser);
+		
+		camera = CameraServer.getInstance().startAutomaticCapture(0);
 	}
 
 	/**
@@ -94,6 +100,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {	
 		autoCommand = (CommandGroup) autoChooser.getSelected();
+		chassisArcade.setChassisMultiplyer(1);
 		if(autoCommand != null){
 			autoCommand.start();
 		}
@@ -109,6 +116,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+		chassisArcade.setChassisMultiplyer(1);
 		if(autoCommand != null){
 			autoCommand.cancel();
 		}

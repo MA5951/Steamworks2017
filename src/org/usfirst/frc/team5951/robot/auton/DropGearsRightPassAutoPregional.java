@@ -3,21 +3,20 @@ package org.usfirst.frc.team5951.robot.auton;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- * @author Omer Libai 
- * a command group that assumes you start at the right side, drops a gear and goes forward
+ *
  */
-public class DropGearsRightPassAutoLine extends CommandGroup {
+public class DropGearsRightPassAutoPregional extends CommandGroup {
 
-	public DropGearsRightPassAutoLine() {
+	public DropGearsRightPassAutoPregional() {
 		// worked before, needs more testing
 		/*addSequential(new ShiftToStrongGear());
-		addSequential(new DriveStraight(2.0)); // Go forward a bit
+		addSequential(new DriveStraight(1.6)); // Go forward a bit
 		addSequential(new TurnToAngle(-49)); // Turn to tower
-		addSequential(new util.WaitCommand(), 0.3);
-		addSequential(new DriveStraight(0.53)); // Go to tower
+		addSequential(new util.WaitCommand(), 0.15);
+		addSequential(new DriveStraight(0.55)); // Go to tower
 		addSequential(new OpenGearsSubsystem()); // Drop the Crepe
 		addSequential(new WaitCommand(), 0.45);
-		addSequential(new DriveStraight(-1.03)); // go behind white obstacle
+		addSequential(new DriveStraight(-1.53)); // go behind white obstacle
 		addParallel(new CloseGearsSubsystem()); // Closes the Crepe
 		addSequential(new TurnToAngle(48.5)); // turn straight
 		addSequential(new WaitCommand(), 0.2);

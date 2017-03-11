@@ -1,12 +1,11 @@
 package org.usfirst.frc.team5951.robot;
 
-import org.usfirst.frc.team5951.robot.commands.ascender.Lift;
 import org.usfirst.frc.team5951.robot.commands.chassis.InvertChassis;
 import org.usfirst.frc.team5951.robot.commands.chassis.ToggleShifters;
-import org.usfirst.frc.team5951.robot.commands.gearsSubsystem.ToggleGearsSubsystem;
-import org.usfirst.frc.team5951.robot.commands.intakeAndShooter.Intake;
-import org.usfirst.frc.team5951.robot.commands.intakeAndShooter.Outtake;
-import org.usfirst.frc.team5951.robot.commands.intakeAndShooter.Shoot;
+import org.usfirst.frc.team5951.robot.commands.gears.floorGearsIntake.IntakeGears;
+import org.usfirst.frc.team5951.robot.commands.gears.floorGearsIntake.ToggleFloorIntakePosition;
+import org.usfirst.frc.team5951.robot.commands.gears.hpGearsSubsystem.OpenGearsHP;
+import org.usfirst.frc.team5951.robot.commands.gears.hpGearsSubsystem.ToggleGearsHP;
 import org.usfirst.frc.team5951.robot.triggers.StartLift;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -28,14 +27,15 @@ public class OI {
 	public static final JoystickButton k_INVERT_CHASSIS = new JoystickButton(k_DRIVER_JOYSTICK, ButtonNumbers.THUMB_BUTTON.get());
 	
 	//Yaniv buttons
-	//Gears subsystem
-	public static final JoystickButton k_TOGGLE_GEARS_SUBSYSTEM = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.A.get());
+	//HP Gears subsystem
+	public static final JoystickButton k_TOGGLE_GEARS = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.A.get());
+	public static final JoystickButton k_OPEN_GEARS = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.Y.get());
 	
-	//Intake and shooter
-	public static final JoystickButton k_INTAKE = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.BUMPER_LEFT.get());
-	public static final JoystickButton k_SHOOT = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.BUMPER_RIGHT.get());
-	public static final JoystickButton k_OUTTAKE = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.B.get());
-	
+	//Floor gears intake
+	public static final JoystickButton k_TOGGLE_FLOOR_INTAKE_POSITION = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.B.get());
+	public static final JoystickButton k_FLOOR_GEARS_INTAKE = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.LB.get());
+
+	//Lift
 	public static final StartLift k_LIFT = new StartLift();
 
 	public OI() {
@@ -43,15 +43,13 @@ public class OI {
 		k_TOGGLE_SHIFTERS.whenPressed(new ToggleShifters());
 		k_INVERT_CHASSIS.whenPressed(new InvertChassis());
 		
+		//Floor gears subsystem
+		k_TOGGLE_FLOOR_INTAKE_POSITION.whenPressed(new ToggleFloorIntakePosition());
+		k_FLOOR_GEARS_INTAKE.whileHeld(new IntakeGears());
+		
 		//Gears subsystem
-		k_TOGGLE_GEARS_SUBSYSTEM.whenActive(new ToggleGearsSubsystem());
-		
-		//Intake and shooter buttons
-		k_INTAKE.whileHeld(new Intake());
-		k_SHOOT.whileHeld(new Shoot());
-		k_OUTTAKE.whileHeld(new Outtake());
-		
-		k_LIFT.whenActive(new Lift());
+		k_TOGGLE_GEARS.whenPressed(new ToggleGearsHP());
+		k_OPEN_GEARS.whenPressed(new OpenGearsHP());
 	}
 
 }

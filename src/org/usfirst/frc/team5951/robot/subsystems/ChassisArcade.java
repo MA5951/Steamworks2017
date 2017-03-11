@@ -43,7 +43,8 @@ public class ChassisArcade extends Subsystem {
 	// Variables
 	public final double k_GYRO_DISPLACEMENT = 1.013370865587614;
 	public final double k_ENCODERS_DISTANCE_PER_PULSE = (1.0 / 1457.471733522452);
-	private int chassisMultiplyer = 1;
+	private int chassisMultiplyer;
+	private boolean fastMode = false;
 
 	// PID values
 	public final double kP_DISTANCE = 8;
@@ -90,6 +91,8 @@ public class ChassisArcade extends Subsystem {
 
 		chassisEncoderLeft.setDistancePerPulse(k_ENCODERS_DISTANCE_PER_PULSE);
 		chassisEncoderRight.setDistancePerPulse(k_ENCODERS_DISTANCE_PER_PULSE);
+		
+		chassisMultiplyer = 1;
 	}
 
 	/**
@@ -113,9 +116,6 @@ public class ChassisArcade extends Subsystem {
 
 		setLeftPower(chassisValues[0]);
 		setRightPower(chassisValues[1]);
-		
-		SmartDashboard.putNumber("Left chassis value: ", chassisValues[0]);
-    	SmartDashboard.putNumber("Right chassis value: ", chassisValues[1]);
 	}
 
 	/**
@@ -164,6 +164,8 @@ public class ChassisArcade extends Subsystem {
 	 */
 	public void switchToFastGear() {
 		this.shiftersPiston.set(Value.kForward);
+		this.fastMode = true;
+		SmartDashboard.putString("Chassis mode: ", "Fast");
 	}
 
 	/**
@@ -171,13 +173,19 @@ public class ChassisArcade extends Subsystem {
 	 */
 	public void switchToStrongGear() {
 		this.shiftersPiston.set(Value.kReverse);
+		this.fastMode = false;
+		SmartDashboard.putString("Chassis mode: ", "Strong");
 	}
 
 	/**
 	 * Toggles the shifters between high and low gear.
 	 */
 	public void toggleShifters() {
-		this.shiftersPiston.set(this.shiftersPiston.get().equals(Value.kForward) ? Value.kReverse : Value.kForward);
+		if(fastMode){
+			this.switchToStrongGear();
+		} else {
+			this.switchToFastGear();
+		}
 	}
 
 	/**
@@ -225,9 +233,16 @@ public class ChassisArcade extends Subsystem {
 	public void invertChassis(){
 		this.chassisMultiplyer = 0 - this.chassisMultiplyer;
 	}
+	
+	/**
+	 * Sets the multiplyer to the wanted value
+	 * @param value - Multiplyer value
+	 */
+	public void setChassisMultiplyer(int value){
+		this.chassisMultiplyer = 1;
+	}
 
 	public void initDefaultCommand() {
 		setDefaultCommand(new ArcadeDrive());
-		// setDefaultCommand(new MySpecialCommand());
 	}
 }
