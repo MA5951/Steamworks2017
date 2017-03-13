@@ -70,7 +70,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Autonomous chooser: ", autoChooser);
 
 		//Camera thread to toggle between 2 or more cameras.
-		Thread t = new Thread(() -> {
+		/*Thread t = new Thread(() -> {
 
 			//Allow camera1 to get video
 			boolean allowCam1 = false;
@@ -127,7 +127,7 @@ public class Robot extends IterativeRobot {
 			}
 
 		});
-		t.start();
+		t.start();*/
 	}
 
 	/**

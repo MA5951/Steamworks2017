@@ -26,8 +26,8 @@ public class FloorGearsIntake extends Subsystem {
     
     //Variables
     private final double k_JOINT_KP = 0.1;
-    private final double k_JOINT_KD = 0.00001;
-    private final double k_JOINT_KI = 0;
+    private final double k_JOINT_KI = 0.00001;
+    private final double k_JOINT_KD = 0;
     
     private final double k_JOINT_FLOOR_INTAKE_ANGLE = 75;
     private final double k_JOINT_GEARS_RELEASE_ANGLE = 0;

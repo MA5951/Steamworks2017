@@ -70,7 +70,7 @@ public class ChassisArcade extends Subsystem {
 		chassisRightFront.enableBrakeMode(true);
 		chassisRightRear.enableBrakeMode(true);
 		
-//		chassisRightFront.setInverted(true);
+		chassisRightFront.setInverted(true);
 //		chassisLeftFront.setInverted(true);
 //		chassisRightRear.reverseOutput(true);
 //		chassisLeftRear.reverseOutput(true);
