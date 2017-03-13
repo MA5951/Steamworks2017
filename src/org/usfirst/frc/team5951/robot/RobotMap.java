@@ -33,8 +33,8 @@ public class RobotMap {
 	public static final int k_PCM = 0;
 
 	// Gears subsystem ports
-	public static final int k_GEARS_SUBSYSTEM_SOLENOID_OPEN = 3;
-	public static final int k_GEARS_SUBSYSTEM_SOLENOID_CLOSED = 2; 	//TODO In robot B they're 0 and 1
+	public static final int k_GEARS_SUBSYSTEM_SOLENOID_OPEN = 6;
+	public static final int k_GEARS_SUBSYSTEM_SOLENOID_CLOSED = 7; 	//TODO In robot B they're 0 and 1
 	
 	public static final int k_GEARS_PUSHER_SOLENOID_OPEN = 4;
 	public static final int k_GEARS_PUSHER_SOLENOID_CLOSE = 5;

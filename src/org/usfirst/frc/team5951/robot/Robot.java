@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team5951.robot;
 
+import org.opencv.core.Mat;
 import org.usfirst.frc.team5951.robot.auton.DoNothing;
 import org.usfirst.frc.team5951.robot.auton.DropGearsLeftPassAutoLine;
 import org.usfirst.frc.team5951.robot.auton.DropGearsLeftShoot;
@@ -14,6 +15,8 @@ import org.usfirst.frc.team5951.robot.subsystems.ChassisArcade;
 import org.usfirst.frc.team5951.robot.subsystems.FloorGearsIntake;
 import org.usfirst.frc.team5951.robot.subsystems.HPGearsSubsystem;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -34,19 +37,17 @@ public class Robot extends IterativeRobot {
 
 	public static final Ascender ascender = new Ascender();
 	public static final HPGearsSubsystem hpGearsSubsystem = new HPGearsSubsystem();
-	public static final ChassisArcade chassisArcade = new ChassisArcade(); 
+	public static final ChassisArcade chassisArcade = new ChassisArcade();
 	public static final FloorGearsIntake floorGearsIntake = new FloorGearsIntake();
-	
+
 	public CommandGroup autoCommand;
-	
+
 	public static OI oi;
-	
+
 	public SendableChooser<CommandGroup> autoChooser;
-	
+
 	public boolean hadAuto = false;
-	
-	private UsbCamera camera;
-	
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -55,7 +56,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 		chassisArcade.calibrateGyro();
-		
+
 		autoChooser = new SendableChooser<>();
 		autoChooser.addDefault("Middle peg, blue alliance", new DropGearsMiddleBlue());
 		autoChooser.addObject("Middle peg, red alliance", new DropGearsMiddleRed());
@@ -65,10 +66,68 @@ public class Robot extends IterativeRobot {
 		autoChooser.addDefault("Right peg, shoot low goal (red)", new DropGearsRightShoot());
 		autoChooser.addObject("Pass auto line", new PassAutoLine());
 		autoChooser.addObject("Do nothing", new DoNothing());
-		
+
 		SmartDashboard.putData("Autonomous chooser: ", autoChooser);
-		
-		camera = CameraServer.getInstance().startAutomaticCapture(0);
+
+		//Camera thread to toggle between 2 or more cameras.
+		Thread t = new Thread(() -> {
+
+			//Allow camera1 to get video
+			boolean allowCam1 = false;
+			
+			//To make sure that we switch 1 camera at a time.
+			boolean isButtonPressedLastIteration = false;
+
+			//First USB camera
+			UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+			camera1.setResolution(320, 240);
+			camera1.setFPS(30);
+			
+			//Second USB camera
+			UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+			camera2.setResolution(320, 240);
+			camera2.setFPS(30);
+
+			//Sinks for the cameras
+			CvSink cvSink1 = CameraServer.getInstance().getVideo(camera1);
+			CvSink cvSink2 = CameraServer.getInstance().getVideo(camera2);
+			
+			//Output stream
+			CvSource outputStream = CameraServer.getInstance().putVideo("Switcher", 320, 240);
+
+			//Image to output
+			Mat image = new Mat();
+
+			while (!Thread.interrupted()) {
+
+				if (OI.k_DRIVER_JOYSTICK.getRawButton(7) && !isButtonPressedLastIteration) {
+					allowCam1 = !allowCam1;
+				}
+
+				if (allowCam1) {
+					cvSink2.setEnabled(false);
+					cvSink1.setEnabled(true);
+					cvSink1.grabFrame(image);
+				} else {
+					cvSink1.setEnabled(false);
+					cvSink2.setEnabled(true);
+					cvSink2.grabFrame(image);
+				}
+
+				outputStream.putFrame(image);
+				
+				isButtonPressedLastIteration = OI.k_DRIVER_JOYSTICK.getRawButton(7);
+			}
+			
+			try {
+				Thread.sleep((long) 0.05);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		});
+		t.start();
 	}
 
 	/**
@@ -98,10 +157,10 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	@Override
-	public void autonomousInit() {	
+	public void autonomousInit() {
 		autoCommand = (CommandGroup) autoChooser.getSelected();
 		chassisArcade.setChassisMultiplyer(1);
-		if(autoCommand != null){
+		if (autoCommand != null) {
 			autoCommand.start();
 		}
 	}
@@ -117,7 +176,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		chassisArcade.setChassisMultiplyer(1);
-		if(autoCommand != null){
+		if (autoCommand != null) {
 			autoCommand.cancel();
 		}
 	}
@@ -128,11 +187,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		
-		//Starts the lift command after end-game starts.
-		/*if(Timer.getMatchTime() >= 105){
-			new Lift();
-		}*/
+
+		// Starts the lift command after end-game starts.
+		/*
+		 * if(Timer.getMatchTime() >= 105){ new Lift(); }
+		 */
 	}
 
 	/**

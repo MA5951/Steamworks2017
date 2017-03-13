@@ -19,9 +19,9 @@ public class ToggleGearsHP extends InstantCommand {
     // Called once when the command executes
     protected void initialize() {
     	if(hpGearsSubsystem.getIsGearsOpen()){
-    		new CloseGearsHP().start();
+    		new ResetGearsHP().start();
     	} else {
-    		new OpenGearsHP().start();
+    		new ReleaseGearsHP().start();
     	}
     }
 

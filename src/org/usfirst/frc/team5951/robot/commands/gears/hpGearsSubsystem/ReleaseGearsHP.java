@@ -10,7 +10,7 @@ public class ReleaseGearsHP extends CommandGroup {
 
     public ReleaseGearsHP() {
         addSequential(new OpenGearsHP());
-        addSequential(new WaitCommand(), 0.3);
+        addSequential(new WaitCommand(), 0.5);
         addSequential(new OpenPushersHP());
     }
 }
