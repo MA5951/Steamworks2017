@@ -10,7 +10,7 @@ public class ResetGearsHP extends CommandGroup {
 
     public ResetGearsHP() {
         addSequential(new ClosePushersHP());
-        addSequential(new WaitCommand(), 0.3);
+        addSequential(new WaitCommand(), 0.15);
         addSequential(new CloseGearsHP());
     }
 }

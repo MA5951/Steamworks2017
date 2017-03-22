@@ -8,23 +8,21 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class IntakeGears extends Command {
+public class ManualRaiseFloorGears extends Command {
 
-	private FloorGearsIntake floorGearsIntake;
+	public FloorGearsIntake floorGearsIntake;
 	
-    public IntakeGears() {
-    	this.floorGearsIntake = Robot.floorGearsIntake;
-    	requires(this.floorGearsIntake);
+    public ManualRaiseFloorGears() {
+        floorGearsIntake = Robot.floorGearsIntake;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-//    	this.floorGearsIntake.getToFloorIntakePosition();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	this.floorGearsIntake.intakeGears();
+    	this.floorGearsIntake.manualRaise();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -34,7 +32,7 @@ public class IntakeGears extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	this.floorGearsIntake.stopIntake();
+    	this.floorGearsIntake.reEnablePID();
     }
 
     // Called when another command which requires one or more of the same

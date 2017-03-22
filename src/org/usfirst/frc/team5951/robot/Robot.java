@@ -4,11 +4,10 @@ package org.usfirst.frc.team5951.robot;
 import org.opencv.core.Mat;
 import org.usfirst.frc.team5951.robot.auton.DoNothing;
 import org.usfirst.frc.team5951.robot.auton.DropGearsLeftPassAutoLine;
-import org.usfirst.frc.team5951.robot.auton.DropGearsLeftShoot;
 import org.usfirst.frc.team5951.robot.auton.DropGearsMiddleBlue;
 import org.usfirst.frc.team5951.robot.auton.DropGearsMiddleRed;
-import org.usfirst.frc.team5951.robot.auton.DropGearsRightPassAutoPregional;
-import org.usfirst.frc.team5951.robot.auton.DropGearsRightShoot;
+import org.usfirst.frc.team5951.robot.auton.DropGearsMiddleReturn;
+import org.usfirst.frc.team5951.robot.auton.DropGearsRightPassAutoLine;
 import org.usfirst.frc.team5951.robot.auton.PassAutoLine;
 import org.usfirst.frc.team5951.robot.subsystems.Ascender;
 import org.usfirst.frc.team5951.robot.subsystems.ChassisArcade;
@@ -61,73 +60,67 @@ public class Robot extends IterativeRobot {
 		autoChooser.addDefault("Middle peg, blue alliance", new DropGearsMiddleBlue());
 		autoChooser.addObject("Middle peg, red alliance", new DropGearsMiddleRed());
 		autoChooser.addObject("Left peg, pass auto", new DropGearsLeftPassAutoLine());
-		autoChooser.addObject("Left peg, shoot low goal (blue)", new DropGearsLeftShoot());
-		autoChooser.addObject("Right peg, pass auto", new DropGearsRightPassAutoPregional());
-		autoChooser.addDefault("Right peg, shoot low goal (red)", new DropGearsRightShoot());
+		autoChooser.addObject("Right peg, pass auto", new DropGearsRightPassAutoLine());
 		autoChooser.addObject("Pass auto line", new PassAutoLine());
 		autoChooser.addObject("Do nothing", new DoNothing());
+		autoChooser.addObject("Middle peg, no auto", new DropGearsMiddleReturn());
 
 		SmartDashboard.putData("Autonomous chooser: ", autoChooser);
 
 		//Camera thread to toggle between 2 or more cameras.
-		/*Thread t = new Thread(() -> {
+		Thread t = new Thread(() -> {
 
-			//Allow camera1 to get video
 			boolean allowCam1 = false;
-			
-			//To make sure that we switch 1 camera at a time.
-			boolean isButtonPressedLastIteration = false;
 
-			//First USB camera
 			UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(0);
 			camera1.setResolution(320, 240);
 			camera1.setFPS(30);
-			
-			//Second USB camera
 			UsbCamera camera2 = CameraServer.getInstance().startAutomaticCapture(1);
 			camera2.setResolution(320, 240);
 			camera2.setFPS(30);
 
-			//Sinks for the cameras
 			CvSink cvSink1 = CameraServer.getInstance().getVideo(camera1);
 			CvSink cvSink2 = CameraServer.getInstance().getVideo(camera2);
-			
-			//Output stream
 			CvSource outputStream = CameraServer.getInstance().putVideo("Switcher", 320, 240);
 
-			//Image to output
 			Mat image = new Mat();
 
 			while (!Thread.interrupted()) {
 
-				if (OI.k_DRIVER_JOYSTICK.getRawButton(7) && !isButtonPressedLastIteration) {
+				if (OI.k_DRIVER_JOYSTICK.getRawButton(7)){
 					allowCam1 = !allowCam1;
 				}
 
 				if (allowCam1) {
 					cvSink2.setEnabled(false);
 					cvSink1.setEnabled(true);
-					cvSink1.grabFrame(image);
+					if(cvSink1.grabFrame(image) == 0){
+						SmartDashboard.putString("Problem!", "Problem");
+					} else {
+						outputStream.putFrame(image);
+						SmartDashboard.putString("Problem!", "No Problem");
+					}
 				} else {
 					cvSink1.setEnabled(false);
 					cvSink2.setEnabled(true);
-					cvSink2.grabFrame(image);
+					if(cvSink2.grabFrame(image) == 0){
+						SmartDashboard.putString("Problem!", "Problem");
+					} else {
+						outputStream.putFrame(image);
+						SmartDashboard.putString("Problem!", "No Problem");
+					}
 				}
 
-				outputStream.putFrame(image);
-				
-				isButtonPressedLastIteration = OI.k_DRIVER_JOYSTICK.getRawButton(7);
-			}
-			
-			try {
-				Thread.sleep((long) 0.05);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
 		});
-		t.start();*/
+		t.start();
 	}
 
 	/**
@@ -187,7 +180,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-
+		
+		SmartDashboard.putNumber("Encoder value joint: ", floorGearsIntake.getEncoderDistance());
+		
 		// Starts the lift command after end-game starts.
 		/*
 		 * if(Timer.getMatchTime() >= 105){ new Lift(); }

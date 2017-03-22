@@ -3,9 +3,12 @@ package org.usfirst.frc.team5951.robot;
 import org.usfirst.frc.team5951.robot.commands.chassis.InvertChassis;
 import org.usfirst.frc.team5951.robot.commands.chassis.ToggleShifters;
 import org.usfirst.frc.team5951.robot.commands.gears.floorGearsIntake.IntakeGears;
+import org.usfirst.frc.team5951.robot.commands.gears.floorGearsIntake.ManualRaiseFloorGears;
 import org.usfirst.frc.team5951.robot.commands.gears.floorGearsIntake.ToggleFloorIntakePosition;
+import org.usfirst.frc.team5951.robot.commands.gears.hpGearsSubsystem.IntakeGearsHP;
 import org.usfirst.frc.team5951.robot.commands.gears.hpGearsSubsystem.OpenGearsHP;
 import org.usfirst.frc.team5951.robot.commands.gears.hpGearsSubsystem.ToggleGearsHP;
+import org.usfirst.frc.team5951.robot.commands.gears.hpGearsSubsystem.TwerkHP;
 import org.usfirst.frc.team5951.robot.triggers.StartLift;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -29,11 +32,13 @@ public class OI {
 	//Yaniv buttons
 	//HP Gears subsystem
 	public static final JoystickButton k_TOGGLE_GEARS = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.A.get());
-	public static final JoystickButton k_OPEN_GEARS = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.Y.get());
+	public static final JoystickButton k_TWERK_GEARS = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.X.get());
+	public static final JoystickButton k_INTAKE_GEARS_HP = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.Y.get());
 	
 	//Floor gears intake
 	public static final JoystickButton k_TOGGLE_FLOOR_INTAKE_POSITION = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.B.get());
 	public static final JoystickButton k_FLOOR_GEARS_INTAKE = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.LB.get());
+	public static final JoystickButton k_MANUAL_GEARS = new JoystickButton(k_SYSTEMS_DRIVER_STICK, ButtonNumbers.RB.get());
 
 	//Lift
 	public static final StartLift k_LIFT = new StartLift();
@@ -46,10 +51,12 @@ public class OI {
 		//Floor gears subsystem
 		k_TOGGLE_FLOOR_INTAKE_POSITION.whenPressed(new ToggleFloorIntakePosition());
 		k_FLOOR_GEARS_INTAKE.whileHeld(new IntakeGears());
-		
+		k_MANUAL_GEARS.whileHeld(new ManualRaiseFloorGears());
 		//Gears subsystem
 		k_TOGGLE_GEARS.whenPressed(new ToggleGearsHP());
-		k_OPEN_GEARS.whenPressed(new OpenGearsHP());
+		k_INTAKE_GEARS_HP.whenPressed(new IntakeGearsHP());
+		
+		k_TWERK_GEARS.whenPressed(new TwerkHP());
 	}
 
 }

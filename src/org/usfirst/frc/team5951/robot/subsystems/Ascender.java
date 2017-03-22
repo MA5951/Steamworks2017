@@ -17,6 +17,7 @@ public class Ascender extends Subsystem {
 	public Ascender() {
 		ascenderTalon = new CANTalon(RobotMap.k_ASCENDER_TALON);
 		ascenderTalon.changeControlMode(TalonControlMode.PercentVbus);
+		ascenderTalon.setInverted(true);
 	}
 
 	/**

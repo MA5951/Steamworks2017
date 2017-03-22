@@ -33,16 +33,16 @@ public class RobotMap {
 	public static final int k_PCM = 0;
 
 	// Gears subsystem ports
-	public static final int k_GEARS_SUBSYSTEM_SOLENOID_OPEN = 6;
-	public static final int k_GEARS_SUBSYSTEM_SOLENOID_CLOSED = 7; 	//TODO In robot B they're 0 and 1
+	public static final int k_GEARS_SUBSYSTEM_SOLENOID_OPEN = 7;
+	public static final int k_GEARS_SUBSYSTEM_SOLENOID_CLOSED = 6; 	//TODO In robot B they're 0 and 1
 	
 	public static final int k_GEARS_PUSHER_SOLENOID_OPEN = 4;
 	public static final int k_GEARS_PUSHER_SOLENOID_CLOSE = 5;
 
 
 	// Chassis
-	public static final int k_CHASSIS_SHIFTERS_OPEN = 3;
-	public static final int k_CHASSIS_SHIFTERS_CLOSE = 2; 	//TODO In robot B they're 2 and 3
+	public static final int k_CHASSIS_SHIFTERS_OPEN = 2;
+	public static final int k_CHASSIS_SHIFTERS_CLOSE = 3; 	//TODO In robot B they're 2 and 3
 
 	
 
@@ -51,14 +51,14 @@ public class RobotMap {
 	 * Sensors
 	 */
 	// Chassis Encoders	
-	public static final int k_CHASSIS_ENCODER_LEFT_A = 4;
-	public static final int k_CHASSIS_ENCODER_LEFT_B = 5;
-	public static final int k_CHASSIS_ENCODER_RIGHT_A = 6;
-	public static final int k_CHASSIS_ENCODER_RIGHT_B = 7;
+	public static final int k_CHASSIS_ENCODER_LEFT_A = 5;
+	public static final int k_CHASSIS_ENCODER_LEFT_B = 6;
+	public static final int k_CHASSIS_ENCODER_RIGHT_A = 7;
+	public static final int k_CHASSIS_ENCODER_RIGHT_B = 8;
 	
 	//Floor gears intake
-	public static final int k_FLOOR_GEARS_INTAKE_ENCODER_A = 2;
-	public static final int k_FLOOR_GEARS_INTAKE_ENCODER_B = 3;
+	public static final int k_FLOOR_GEARS_INTAKE_ENCODER_A = 3;
+	public static final int k_FLOOR_GEARS_INTAKE_ENCODER_B = 2;
 	
 	//Ultrasonic
 	public static final int k_ULTRASONIC = 1; 

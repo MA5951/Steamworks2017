@@ -1,6 +1,13 @@
 package org.usfirst.frc.team5951.robot.auton;
 
+import org.usfirst.frc.team5951.robot.commands.chassis.DriveStraight;
+import org.usfirst.frc.team5951.robot.commands.chassis.ShiftToStrongGear;
+import org.usfirst.frc.team5951.robot.commands.chassis.TurnToAngle;
+import org.usfirst.frc.team5951.robot.commands.gears.hpGearsSubsystem.ReleaseGearsHP;
+import org.usfirst.frc.team5951.robot.commands.gears.hpGearsSubsystem.ResetGearsHP;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import util.WaitCommand;
 
 /**
  * @author Omer Libai 
@@ -10,18 +17,18 @@ public class DropGearsRightPassAutoLine extends CommandGroup {
 
 	public DropGearsRightPassAutoLine() {
 		// worked before, needs more testing
-		/*addSequential(new ShiftToStrongGear());
+//		addSequential(new ShiftToStrongGear());
 		addSequential(new DriveStraight(2.0)); // Go forward a bit
 		addSequential(new TurnToAngle(-49)); // Turn to tower
 		addSequential(new util.WaitCommand(), 0.3);
 		addSequential(new DriveStraight(0.53)); // Go to tower
-		addSequential(new OpenGearsSubsystem()); // Drop the Crepe
+		addSequential(new ReleaseGearsHP()); // Drop the Crepe
 		addSequential(new WaitCommand(), 0.45);
 		addSequential(new DriveStraight(-1.03)); // go behind white obstacle
-		addParallel(new CloseGearsSubsystem()); // Closes the Crepe
+		addParallel(new ResetGearsHP()); // Closes the Crepe
 		addSequential(new TurnToAngle(48.5)); // turn straight
 		addSequential(new WaitCommand(), 0.2);
 		addSequential(new DriveStraight(3.5)); // straight ahead!
-		addSequential(new ShiftToStrongGear());*/
+		addSequential(new ShiftToStrongGear());
 	}
 }

@@ -48,7 +48,7 @@ public class ChassisArcade extends Subsystem {
 
 	// PID values
 	public final double kP_DISTANCE = 8;
-	public final double kP_ANGLE = 0.15;
+	public final double kP_ANGLE = -0.15;
 
 	/**
 	 * Constructor for the ChassisArcade class, initializes components.
@@ -70,7 +70,7 @@ public class ChassisArcade extends Subsystem {
 		chassisRightFront.enableBrakeMode(true);
 		chassisRightRear.enableBrakeMode(true);
 		
-		chassisRightFront.setInverted(true);
+		chassisLeftFront.setInverted(true);
 //		chassisLeftFront.setInverted(true);
 //		chassisRightRear.reverseOutput(true);
 //		chassisLeftRear.reverseOutput(true);
@@ -87,7 +87,7 @@ public class ChassisArcade extends Subsystem {
 		chassisEncoderLeft = new Encoder(RobotMap.k_CHASSIS_ENCODER_LEFT_A, RobotMap.k_CHASSIS_ENCODER_LEFT_B);
 		chassisEncoderRight = new Encoder(RobotMap.k_CHASSIS_ENCODER_RIGHT_A, RobotMap.k_CHASSIS_ENCODER_RIGHT_B);
 
-		chassisEncoderLeft.setReverseDirection(true);
+		chassisEncoderRight.setReverseDirection(true);
 
 		chassisEncoderLeft.setDistancePerPulse(k_ENCODERS_DISTANCE_PER_PULSE);
 		chassisEncoderRight.setDistancePerPulse(k_ENCODERS_DISTANCE_PER_PULSE);
@@ -105,14 +105,14 @@ public class ChassisArcade extends Subsystem {
 	 *            - Joystick's X value
 	 */
 	public void arcadeDrive(Joystick stick) {
-		double[] chassisValues = ChassisMath.calculatePower(stick.getY(), stick.getX());
+		double[] chassisValues = ChassisMath.calculatePower(stick.getY(), -stick.getX());
 
 		setLeftPower(chassisValues[0]);
 		setRightPower(chassisValues[1]);
 	}
 
 	public void arcadeDrive(double moveValue, double rotateValue) {
-		double[] chassisValues = ChassisMath.calculatePower(moveValue * chassisMultiplyer, rotateValue);
+		double[] chassisValues = ChassisMath.calculatePower(moveValue * chassisMultiplyer, -rotateValue);
 
 		setLeftPower(chassisValues[0]);
 		setRightPower(chassisValues[1]);
